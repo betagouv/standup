@@ -5,5 +5,9 @@
   <div {{action "nextStartup"}} class="container">
     <h2>{{currentStartup.name}}</h2>
     <h3>{{currentStartup.pitch}}</h3>
+
+    <div class="time-left">
+      {{formattedMinutesLeft}}:{{formattedSecondsLeft}}
+    </div>
   </div>
 {{/if}}

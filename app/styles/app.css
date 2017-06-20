@@ -47,3 +47,11 @@ h3 {
   color: black;
   text-decoration: none;
 }
+
+.time-left {
+  position: fixed;
+  font-size: 120px;
+  bottom: 100px;
+  text-align: center;
+  width: 100%;
+}
