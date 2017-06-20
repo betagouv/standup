@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  hifi: Ember.inject.service(),
   state: 'home',
   startupIndex: 0,
   timer: null,
@@ -40,6 +41,7 @@ export default Ember.Controller.extend({
     this.set('minutesLeft', remainingTime.minutes);
 
     if (remainingTime.total <= 0) {
+      this.get('hifi').play('assets/sounds/gong.mp3');
       this.send('nextStartup');
     }
   },
