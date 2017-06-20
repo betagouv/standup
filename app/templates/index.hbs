@@ -2,6 +2,8 @@
   <h1>STAND-UP</h1>
   <a href="#" {{action "start"}} class="start-button">COMMENCER</a>
 {{else if (eq state "startups")}}
-  <h2>{{currentStartup.name}}</h2>
-  <h3>{{currentStartup.pitch}}</h3>
+  <div {{action "nextStartup"}} class="container">
+    <h2>{{currentStartup.name}}</h2>
+    <h3>{{currentStartup.pitch}}</h3>
+  </div>
 {{/if}}

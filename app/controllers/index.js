@@ -7,6 +7,10 @@ export default Ember.Controller.extend({
   actions: {
     start: function() {
       this.set('state', 'startups')
+    },
+
+    nextStartup: function() {
+      this.set('startupIndex', this.get('startupIndex') + 1);
     }
   },
 
