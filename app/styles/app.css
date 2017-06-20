@@ -16,6 +16,14 @@ h1 {
   margin-bottom: 150px;
 }
 
+h2 {
+  font-size: 80px;
+}
+
+h3 {
+  font-size: 40px;
+}
+
 .start-button {
   font-size: 40px;
   padding-left: 40px;

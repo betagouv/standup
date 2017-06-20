@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   state: 'home',
+  startupIndex: 0,
 
   actions: {
     start: function() {
@@ -39,5 +40,8 @@ export default Ember.Controller.extend({
   shuffledIncubateurStartups: Ember.computed('incubateurStartups', function() {
     return this.shuffle(this.get('incubateurStartups'));
   }),
-  startups: Ember.computed.union('shuffledIncubateurStartups', 'friendsStartups')
+  startups: Ember.computed.union('shuffledIncubateurStartups', 'friendsStartups'),
+  currentStartup: Ember.computed('startups', 'startupIndex', function() {
+    return this.get('startups')[this.get('startupIndex')];
+  })
 });
