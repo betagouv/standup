@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
   actions: {
     start: function() {
-      this.setTimer();
+      this.setTimerForState('startups');
       this.set('state', 'startups')
     },
 
@@ -18,31 +18,42 @@ export default Ember.Controller.extend({
       clearInterval(this.get('timer'));
 
       if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
-        this.setTimer();
+        this.setTimerForState('startups');
         this.set('startupIndex', this.get('startupIndex') + 1);
       } else {
         this.set('startupIndex', 0);
-        this.set('state', 'home');
+        this.setTimerForState('meta');
+        this.set('state', 'meta');
       }
+    },
+
+    goHome: function () {
+      clearInterval(this.get('timer'));
+      this.set('state', 'home');
     }
   },
 
-  setTimer: function() {
-    var endtime = this.endtime(65),
-        timer = setInterval(function() { this.tick(endtime); }.bind(this), 1000);
+  setTimerForState: function(state) {
+    var seconds = state === 'startups' ? 65 : 315,
+        endtime = this.endtime(seconds),
+        timer = setInterval(function() { this.tick(state, endtime); }.bind(this), 1000);
 
     this.set('timer', timer);
-    this.tick(endtime);
+    this.tick(state, endtime);
   },
 
-  tick: function(endtime) {
+  tick: function(state, endtime) {
     var remainingTime = this.getRemainingTime(endtime);
     this.set('secondsLeft', remainingTime.seconds);
     this.set('minutesLeft', remainingTime.minutes);
 
     if (remainingTime.total <= 0) {
       this.get('hifi').play('assets/sounds/gong.mp3');
-      this.send('nextStartup');
+      if (state === 'startups') {
+        this.send('nextStartup');
+      } else {
+        this.send('goHome');
+      }
     }
   },
 

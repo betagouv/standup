@@ -10,4 +10,12 @@
       {{formattedMinutesLeft}}:{{formattedSecondsLeft}}
     </div>
   </div>
+{{else if (eq state "meta")}}
+  <div {{action "goHome"}} class="container">
+    <h2>Sujets transverses</h2>
+
+    <div class="time-left">
+      {{formattedMinutesLeft}}:{{formattedSecondsLeft}}
+    </div>
+  </div>
 {{/if}}
