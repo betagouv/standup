@@ -49,9 +49,13 @@ h3 {
 }
 
 .time-left {
+  background-color: black;
+  color: white;
   position: fixed;
   font-size: 120px;
   bottom: 100px;
   text-align: center;
-  width: 100%;
+  width: 400px;
+  border-radius: 30px;
+  left: calc(50% - (400px / 2));
 }
