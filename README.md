@@ -16,6 +16,7 @@ You will need the following things properly installed on your computer.
 * `git clone <repository-url>` this repository
 * `cd standup`
 * `npm install`
+* `bower install`
 
 ## Running / Development
 
