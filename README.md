@@ -8,7 +8,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
-* [Ember CLI](https://ember-cli.com/)
+* [Ember CLI](https://ember-cli.com/) (with NPM)
 * [PhantomJS](http://phantomjs.org/)
 
 ## Installation
@@ -16,23 +16,23 @@ You will need the following things properly installed on your computer.
 * `git clone <repository-url>` this repository
 * `cd standup`
 * `npm install`
-* `bower install`
+* `bower install` or `npm run bower -- install`
 
 ## Running / Development
 
-* `ember serve`
+* `ember server` or `npm run start`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Running Tests
 
-* `ember test`
-* `ember test --server`
+* `ember test` or `npm run test`
+* `ember test --server` or `npm run test -- --server`
 
 ### Building
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+* `ember build` or `npm run build` (development)
+* `ember build --environment production` or `npm run build -- --environment production` (production)
 
 ### Deploying
 
-* `ember surge`
+* `ember surge` or `npm run surge`
