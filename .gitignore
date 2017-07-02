@@ -1,12 +1,15 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# compiled output
+# Compiled output
 /dist
 /tmp
+/wss/_build
+/wss/*.ez
 
 # dependencies
 /node_modules
 /bower_components
+/wss/deps
 
 # misc
 /.sass-cache
@@ -15,3 +18,4 @@
 /libpeerconnection.log
 npm-debug.log*
 testem.log
+erl_crash.dump
