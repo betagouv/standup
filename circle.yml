@@ -1,7 +1,0 @@
-machine:
-  node:
-    version: 7.0
-
-dependencies:
-  post:
-    - npm run bower install
