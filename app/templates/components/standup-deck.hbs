@@ -1,0 +1,17 @@
+{{#if (eq state "home")}}
+  <h1>STAND-UP</h1>
+  <a href="#" {{action "start"}} class="start-button">COMMENCER</a>
+{{else if (eq state "startups")}}
+  {{timed-slide
+    title=currentStartup.name
+    subtitle=currentStartup.pitch
+    formattedMinutesLeft=formattedMinutesLeft
+    formattedSecondsLeft=formattedSecondsLeft
+    next=(action "nextStartup")}}
+{{else if (eq state "meta")}}
+  {{timed-slide
+    title="Sujets transverses"
+    formattedMinutesLeft=formattedMinutesLeft
+    formattedSecondsLeft=formattedSecondsLeft
+    next=(action "goHome")}}
+{{/if}}
