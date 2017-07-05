@@ -1,6 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  // Slide (60) + buffer (5)
+  STARTUP_SLIDE_DURATION: 65,
+  // Duration (65) - 15
+  STARTUP_SLIDE_ENDS_SOON_AT: 50,
+  // Slide (300) + buffer (15)
+  META_SLIDE_TOTAL_DURATION: 315,
+  // Duration (315) - 60
+  META_SLIDE_ENDS_SOON_AT: 255,
+
   hifi: Ember.inject.service(),
   state: 'home',
   startupIndex: 0,
@@ -34,7 +43,7 @@ export default Ember.Component.extend({
   },
 
   setTimerForState: function(state) {
-    var seconds = state === 'startups' ? 65 : 315,
+    var seconds = state === 'startups' ? this.get('STARTUP_SLIDE_DURATION') : this.get('META_SLIDE_DURATION'),
         startTime = Date.parse(new Date()),
         endTime = this.endTime(seconds),
         timer = setInterval(function() { this.tick(state, startTime, endTime); }.bind(this), 1000);
@@ -118,9 +127,9 @@ export default Ember.Component.extend({
   }),
   isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
     if (this.get('state') === 'startups') {
-      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > 50;
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
     } else {
-      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > 255;
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   })
 });
