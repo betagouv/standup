@@ -1,12 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  // Slide (60) + buffer (5)
+  STARTUP_SLIDE_DURATION: 65,
+  // Duration (65) - 15
+  STARTUP_SLIDE_ENDS_SOON_AT: 50,
+  // Slide (300) + buffer (15)
+  META_SLIDE_TOTAL_DURATION: 315,
+  // Duration (315) - 60
+  META_SLIDE_ENDS_SOON_AT: 255,
+
   hifi: Ember.inject.service(),
   state: 'home',
   startupIndex: 0,
   timer: null,
-  secondsLeft: null,
-  minutesLeft: null,
+  elapsedSeconds: null,
+  elapsedMinutes: null,
 
   actions: {
     start: function() {
@@ -34,20 +43,21 @@ export default Ember.Component.extend({
   },
 
   setTimerForState: function(state) {
-    var seconds = state === 'startups' ? 65 : 315,
-        endtime = this.endtime(seconds),
-        timer = setInterval(function() { this.tick(state, endtime); }.bind(this), 1000);
+    var seconds = state === 'startups' ? this.get('STARTUP_SLIDE_DURATION') : this.get('META_SLIDE_DURATION'),
+        startTime = Date.parse(new Date()),
+        endTime = this.endTime(seconds),
+        timer = setInterval(function() { this.tick(state, startTime, endTime); }.bind(this), 1000);
 
     this.set('timer', timer);
-    this.tick(state, endtime);
+    this.tick(state, startTime, endTime);
   },
 
-  tick: function(state, endtime) {
-    var remainingTime = this.getRemainingTime(endtime);
-    this.set('secondsLeft', remainingTime.seconds);
-    this.set('minutesLeft', remainingTime.minutes);
+  tick: function(state, startTime, endTime) {
+    var elapsedTime = this.getElapsedTime(startTime);
+    this.set('elapsedSeconds', elapsedTime.seconds);
+    this.set('elapsedMinutes', elapsedTime.minutes);
 
-    if (remainingTime.total <= 0) {
+    if (Date.parse(new Date()) >= endTime) {
       this.get('hifi').play('assets/sounds/gong.mp3');
       if (state === 'startups') {
         this.send('nextStartup');
@@ -77,20 +87,19 @@ export default Ember.Component.extend({
     return collection;
   },
 
-  endtime: function(seconds) {
+  endTime: function(seconds) {
     var time = new Date();
     time.setSeconds(time.getSeconds() + seconds)
 
-    return time;
+    return Date.parse(time);
   },
 
-  getRemainingTime: function(endtime) {
-    var time = Date.parse(endtime) - Date.parse(new Date()),
+  getElapsedTime: function(startTime) {
+    var time = Date.parse(new Date()) - startTime,
         seconds = Math.floor((time / 1000) % 60),
         minutes = Math.floor((time / 1000 / 60) % 60);
 
     return {
-      'total': time,
       'minutes': minutes,
       'seconds': seconds
     };
@@ -110,10 +119,17 @@ export default Ember.Component.extend({
   currentStartup: Ember.computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
-  formattedSecondsLeft: Ember.computed('secondsLeft', function() {
-    return ("00" + String(this.get('secondsLeft'))).slice(-2);
+  formattedElapsedSeconds: Ember.computed('elapsedSeconds', function() {
+    return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
   }),
-  formattedMinutesLeft: Ember.computed('minutesLeft', function() {
-    return ("00" + String(this.get('minutesLeft'))).slice(-2);
+  formattedElapsedMinutes: Ember.computed('elapsedMinutes', function() {
+    return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
+  }),
+  isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
+    if (this.get('state') === 'startups') {
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
+    } else {
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
+    }
   })
 });

@@ -55,7 +55,7 @@ h3 {
   color: white;
 }
 
-.time-left {
+.elapsed-time {
   background-color: black;
   color: white;
   position: fixed;
@@ -65,4 +65,8 @@ h3 {
   width: 50vh;
   border-radius: 2vh;
   left: calc(50% - (50vh / 2));
+}
+
+.elapsed-time.ending-soon {
+  background-color: #BB0000;
 }
