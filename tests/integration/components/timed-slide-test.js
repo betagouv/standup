@@ -24,6 +24,17 @@ test('it renders', function(assert) {
   assert.equal(this.$('.elapsed-time').text().trim(),           '1:59');
 });
 
+test('it renders correctly when isEndingSoon is true', function(assert) {
+  this.set('isEndingSoon', true);
+
+  this.render(hbs`
+    {{timed-slide
+      isEndingSoon=isEndingSoon}}
+  `);
+
+  assert.equal(this.$('.elapsed-time').hasClass('ending-soon'), true);
+});
+
 test('it sends an action on click', function(assert) {
   let didReceiveAction = false;
   this.on('nextStartup', function() {

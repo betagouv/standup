@@ -115,5 +115,12 @@ export default Ember.Component.extend({
   }),
   formattedElapsedMinutes: Ember.computed('elapsedMinutes', function() {
     return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
+  }),
+  isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
+    if (this.get('state') === 'startups') {
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > 50;
+    } else {
+      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > 255;
+    }
   })
 });

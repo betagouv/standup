@@ -1,6 +1,6 @@
 <h2 class="timed-slide__title">{{title}}</h2>
 <h3 class="timed-slide__subtitle">{{subtitle}}</h3>
 
-<div class="elapsed-time">
+<div class="elapsed-time {{if isEndingSoon 'ending-soon'}}">
   {{formattedElapsedMinutes}}:{{formattedElapsedSeconds}}
 </div>

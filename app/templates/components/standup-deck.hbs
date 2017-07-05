@@ -7,11 +7,13 @@
     subtitle=currentStartup.pitch
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
+    isEndingSoon=isEndingSoon
     next=(action "nextStartup")}}
 {{else if (eq state "meta")}}
   {{timed-slide
     title="Sujets transverses"
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
+    isEndingSoon=isEndingSoon
     next=(action "goHome")}}
 {{/if}}

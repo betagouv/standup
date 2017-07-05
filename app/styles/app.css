@@ -66,3 +66,7 @@ h3 {
   border-radius: 2vh;
   left: calc(50% - (50vh / 2));
 }
+
+.elapsed-time.ending-soon {
+  background-color: #BB0000;
+}
