@@ -5,13 +5,13 @@
   {{timed-slide
     title=currentStartup.name
     subtitle=currentStartup.pitch
-    formattedMinutesLeft=formattedMinutesLeft
-    formattedSecondsLeft=formattedSecondsLeft
+    formattedElapsedMinutes=formattedElapsedMinutes
+    formattedElapsedSeconds=formattedElapsedSeconds
     next=(action "nextStartup")}}
 {{else if (eq state "meta")}}
   {{timed-slide
     title="Sujets transverses"
-    formattedMinutesLeft=formattedMinutesLeft
-    formattedSecondsLeft=formattedSecondsLeft
+    formattedElapsedMinutes=formattedElapsedMinutes
+    formattedElapsedSeconds=formattedElapsedSeconds
     next=(action "goHome")}}
 {{/if}}
