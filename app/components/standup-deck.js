@@ -35,15 +35,15 @@ export default Ember.Component.extend({
 
   setTimerForState: function(state) {
     var seconds = state === 'startups' ? 65 : 315,
-        endtime = this.endtime(seconds),
-        timer = setInterval(function() { this.tick(state, endtime); }.bind(this), 1000);
+        endTime = this.endTime(seconds),
+        timer = setInterval(function() { this.tick(state, endTime); }.bind(this), 1000);
 
     this.set('timer', timer);
-    this.tick(state, endtime);
+    this.tick(state, endTime);
   },
 
-  tick: function(state, endtime) {
-    var remainingTime = this.getRemainingTime(endtime);
+  tick: function(state, endTime) {
+    var remainingTime = this.getRemainingTime(endTime);
     this.set('secondsLeft', remainingTime.seconds);
     this.set('minutesLeft', remainingTime.minutes);
 
@@ -77,15 +77,15 @@ export default Ember.Component.extend({
     return collection;
   },
 
-  endtime: function(seconds) {
+  endTime: function(seconds) {
     var time = new Date();
     time.setSeconds(time.getSeconds() + seconds)
 
     return time;
   },
 
-  getRemainingTime: function(endtime) {
-    var time = Date.parse(endtime) - Date.parse(new Date()),
+  getRemainingTime: function(endTime) {
+    var time = Date.parse(endTime) - Date.parse(new Date()),
         seconds = Math.floor((time / 1000) % 60),
         minutes = Math.floor((time / 1000 / 60) % 60);
 
