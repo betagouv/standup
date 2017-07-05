@@ -59,12 +59,33 @@ h3 {
   background-color: black;
   color: white;
   position: fixed;
-  font-size: 14vh;
   bottom: 10vh;
-  text-align: center;
+  left: 10vh;
   width: 50vh;
+  height: 17vh;
+  font-size: 14vh;
+  line-height: 17vh;
+  text-align: center;
   border-radius: 2vh;
-  left: calc(50% - (50vh / 2));
+}
+
+.next-slide {
+  color: black;
+  position: fixed;
+  bottom: 10vh;
+  right: 10vh;
+  width: calc(100% - (50vh + (2 * 10vh) + 10vh));
+  height: 17vh;
+  font-size: 8vh;
+  line-height: 17vh;
+  text-align: left;
+  padding-left: 5vh;
+  padding-right: 5vh;
+  border: solid 1vh black;
+  border-radius: 2vh;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .elapsed-time.ending-soon {
