@@ -8,12 +8,14 @@
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
-    next=(action "nextStartup")}}
+    next=(action "nextStartup")
+    nextSlide=nextSlide}}
 {{else if (eq state "meta")}}
   {{timed-slide
     title="Sujets transverses"
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
-    next=(action "goHome")}}
+    next=(action "goHome")
+    nextSlide="fin"}}
 {{/if}}

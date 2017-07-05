@@ -131,5 +131,12 @@ export default Ember.Component.extend({
     } else {
       return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
     }
+  }),
+  nextSlide: Ember.computed('startupIndex', function() {
+    if (this.get('startupIndex') > this.get('startups.length') - 2) {
+      return 'Sujets transverses';
+    } else {
+      return this.get('startups')[this.get('startupIndex') + 1].get('name');
+    }
   })
 });
