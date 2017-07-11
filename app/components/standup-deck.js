@@ -11,6 +11,7 @@ export default Ember.Component.extend({
   META_SLIDE_ENDS_SOON_AT: 255,
 
   hifi: Ember.inject.service(),
+  socket: Ember.inject.service('websocket'),
   state: 'home',
   startupIndex: 0,
   timer: null,
@@ -20,7 +21,7 @@ export default Ember.Component.extend({
   actions: {
     start: function() {
       this.setTimerForState('startups');
-      this.set('state', 'startups')
+      this.set('state', 'startups');
     },
 
     nextStartup: function() {
@@ -40,6 +41,11 @@ export default Ember.Component.extend({
       clearInterval(this.get('timer'));
       this.set('state', 'home');
     }
+  },
+
+  init: function () {
+    this._super();
+    this.get('socket').connect();
   },
 
   setTimerForState: function(state) {
