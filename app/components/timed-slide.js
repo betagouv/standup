@@ -13,7 +13,15 @@ export default Ember.Component.extend({
   },
 
   keyUp(event) {
-    if(event.key !== 'ArrowRight') { return; }
-    this.get('next')();
+    switch (event.key) {
+      case 'ArrowRight':
+        this.get('next')();
+        break;
+      case 'ArrowLeft':
+        this.get('previous')();
+        break;
+      default:
+        break;
+    }
   }
 });

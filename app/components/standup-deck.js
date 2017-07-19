@@ -37,6 +37,21 @@ export default Ember.Component.extend({
       }
     },
 
+    previousStartup: function() {
+      clearInterval(this.get('timer'));
+
+      if (this.get('startupIndex') === 0 && this.get('state') !== 'meta') { return; }
+
+      if(this.get('state') === 'meta') {
+        this.setTimerForState('startups');
+        this.set('startupIndex', this.get('startups.length'));
+        this.set('state', 'startups');
+      } else {
+        this.setTimerForState('startups');
+        this.set('startupIndex', this.get('startupIndex') - 1);
+      }
+    },
+
     goHome: function () {
       clearInterval(this.get('timer'));
       this.set('state', 'home');
