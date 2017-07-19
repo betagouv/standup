@@ -9,6 +9,7 @@
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
     next=(action "nextStartup")
+    previous=(action "previousStartup")
     nextSlide=nextSlide}}
 {{else if (eq state "meta")}}
   {{timed-slide
@@ -17,5 +18,6 @@
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
     next=(action "goHome")
+    previous=(action "previousStartup")
     nextSlide="fin"}}
 {{/if}}
