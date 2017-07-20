@@ -38,6 +38,26 @@ export default Ember.Component.extend(EKMixin, {
       }
     },
 
+    previousSlide: function() {
+      clearInterval(this.get('timer'));
+
+      switch(this.get('state')) {
+        case 'startups':
+          if (this.get('startupIndex') === 0) {
+            this.set('state', 'home');
+          } else {
+            this.setTimerForState('startups');
+            this.set('startupIndex', this.get('startupIndex') - 1);
+          }
+          break;
+        case 'meta':
+          this.setTimerForState('startups');
+          this.set('state', 'startups');
+          this.set('startupIndex', this.get('startups.length') - 1);
+          break;
+      }
+    },
+
     goHome: function () {
       clearInterval(this.get('timer'));
       this.set('state', 'home');
@@ -65,6 +85,10 @@ export default Ember.Component.extend(EKMixin, {
         this.send('goHome');
         break;
     }
+  }),
+
+  leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
+    this.send('previousSlide');
   }),
 
   setTimerForState: function(state) {
