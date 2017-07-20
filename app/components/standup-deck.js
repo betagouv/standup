@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import { EKMixin } from 'ember-keyboard';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
   STARTUP_SLIDE_DURATION: 65,
   // Duration (65) - 15
@@ -47,6 +48,10 @@ export default Ember.Component.extend({
     this._super();
     this.get('socket').connect();
   },
+
+  activateKeyboard: Ember.on('init', function() {
+    this.set('keyboardActivated', true);
+  }),
 
   setTimerForState: function(state) {
     var seconds = state === 'startups' ? this.get('STARTUP_SLIDE_DURATION') : this.get('META_SLIDE_DURATION'),
