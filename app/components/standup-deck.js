@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { EKMixin } from 'ember-keyboard';
+import { EKMixin, keyUp } from 'ember-keyboard';
 
 export default Ember.Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
@@ -51,6 +51,20 @@ export default Ember.Component.extend(EKMixin, {
 
   activateKeyboard: Ember.on('init', function() {
     this.set('keyboardActivated', true);
+  }),
+
+  rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
+    switch(this.get('state')) {
+      case 'home':
+        this.send('start');
+        break;
+      case 'startups':
+        this.send('nextStartup');
+        break;
+      case 'meta':
+        this.send('goHome');
+        break;
+    }
   }),
 
   setTimerForState: function(state) {
