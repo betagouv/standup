@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import { EKMixin, keyUp } from 'ember-keyboard';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
   STARTUP_SLIDE_DURATION: 65,
   // Duration (65) - 15
@@ -37,6 +38,26 @@ export default Ember.Component.extend({
       }
     },
 
+    previousSlide: function() {
+      clearInterval(this.get('timer'));
+
+      switch(this.get('state')) {
+        case 'startups':
+          if (this.get('startupIndex') === 0) {
+            this.set('state', 'home');
+          } else {
+            this.setTimerForState('startups');
+            this.set('startupIndex', this.get('startupIndex') - 1);
+          }
+          break;
+        case 'meta':
+          this.setTimerForState('startups');
+          this.set('state', 'startups');
+          this.set('startupIndex', this.get('startups.length') - 1);
+          break;
+      }
+    },
+
     goHome: function () {
       clearInterval(this.get('timer'));
       this.set('state', 'home');
@@ -47,6 +68,28 @@ export default Ember.Component.extend({
     this._super();
     this.get('socket').connect();
   },
+
+  activateKeyboard: Ember.on('init', function() {
+    this.set('keyboardActivated', true);
+  }),
+
+  rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
+    switch(this.get('state')) {
+      case 'home':
+        this.send('start');
+        break;
+      case 'startups':
+        this.send('nextStartup');
+        break;
+      case 'meta':
+        this.send('goHome');
+        break;
+    }
+  }),
+
+  leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
+    this.send('previousSlide');
+  }),
 
   setTimerForState: function(state) {
     var seconds = state === 'startups' ? this.get('STARTUP_SLIDE_DURATION') : this.get('META_SLIDE_DURATION'),

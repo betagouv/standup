@@ -37,6 +37,7 @@
     "ember-data": "^2.13.0",
     "ember-export-application-global": "^2.0.0",
     "ember-hifi": "^1.10.1",
+    "ember-keyboard": "^2.1.10",
     "ember-load-initializers": "^1.0.0",
     "ember-mock-socket": "^0.1.4",
     "ember-phoenix": "^0.1.6",
