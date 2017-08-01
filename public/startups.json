@@ -1,0 +1,385 @@
+{
+    "links": {
+        "self": "https://beta.gouv.fr/startups"
+    },
+    "data": [
+        {
+            "id": "api-drones",
+            "type": "startup",
+            "attributes": {
+                "name": "API Drones",
+                "pitch": "Une meilleure connaissance du ciel pour plus de sécurité et d'innovation",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/api-drones.png"
+            }
+        },
+        {
+            "id": "api-entreprise",
+            "type": "startup",
+            "attributes": {
+                "name": "API Entreprise",
+                "pitch": "Récupérer les données des entreprises",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/api-entreprise.png"
+            }
+        },
+        {
+            "id": "api-geo",
+            "type": "startup",
+            "attributes": {
+                "name": "API Géo",
+                "pitch": "Interrogez les référentiels géographiques plus facilement",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/api-geo.png"
+            }
+        },
+        {
+            "id": "api-particulier",
+            "type": "startup",
+            "attributes": {
+                "name": "API Particulier",
+                "pitch": "Récupérer les données des particuliers",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/api-particulier.png"
+            }
+        },
+        {
+            "id": "api.gouv.fr",
+            "type": "startup",
+            "attributes": {
+                "name": "api.gouv.fr",
+                "pitch": "Faciliter l'accès aux API publiques pour faire émerger de nouveaux services",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/api.gouv.fr.png"
+            }
+        },
+        {
+            "id": "ara",
+            "type": "startup",
+            "attributes": {
+                "name": "Aide à la Reprise d'Activité - ARA",
+                "pitch": "Découvrir les aides et mesures Pôle emploi qui accélèrent la reprise d'activité",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/ara.jpg"
+            }
+        },
+        {
+            "id": "ban",
+            "type": "startup",
+            "attributes": {
+                "name": "Base Adresse Nationale",
+                "pitch": "Référencer l'intégralité des adresses du territoire français",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/ban.png"
+            }
+        },
+        {
+            "id": "bourse",
+            "type": "startup",
+            "attributes": {
+                "name": "Bourse",
+                "pitch": "Demander et liquider une bourse de collège en ligne",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/bourse.png"
+            }
+        },
+        {
+            "id": "boussole",
+            "type": "startup",
+            "attributes": {
+                "name": "Boussole des droits",
+                "pitch": "Accéder aux conseils d'un·e professionnel·le à proximité pour trouver un logement, une formation ou un emploi",
+                "status": "passation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/boussole.png"
+            }
+        },
+        {
+            "id": "data.gouv.fr",
+            "type": "startup",
+            "attributes": {
+                "name": "data.gouv.fr",
+                "pitch": "Partager, améliorer et réutiliser les données publiques",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/data.gouv.fr.png"
+            }
+        },
+        {
+            "id": "e-conseils",
+            "type": "startup",
+            "attributes": {
+                "name": "Réso",
+                "pitch": "Apporter l'ensemble des aides publiques aux entreprises qui en ont besoin",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/e-conseils.png"
+            }
+        },
+        {
+            "id": "embauche",
+            "type": "startup",
+            "attributes": {
+                "name": "Simulateur de coût d’embauche",
+                "pitch": "Estimer le coût d'une embauche en France",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/embauche.png"
+            }
+        },
+        {
+            "id": "etudiant-entrepreneur",
+            "type": "startup",
+            "attributes": {
+                "name": "Étudiant entrepreneur",
+                "pitch": "Faciliter l'accès au statut étudiant entrepreneur et à ses bénéfices",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/etudiant-entrepreneur.png"
+            }
+        },
+        {
+            "id": "fiches-de-banc",
+            "type": "startup",
+            "attributes": {
+                "name": "Fiches de banc",
+                "pitch": "Augmenter la productivité du traitement des amendements dans les cabinets ministériels",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/fiches-de-banc.png"
+            }
+        },
+        {
+            "id": "inspire",
+            "type": "startup",
+            "attributes": {
+                "name": "inspire.data.gouv.fr",
+                "pitch": "Libérer les données géographiques pour intensifier leurs usages",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/inspire.png"
+            }
+        },
+        {
+            "id": "la-bonne-boite",
+            "type": "startup",
+            "attributes": {
+                "name": "La Bonne Boîte",
+                "pitch": "Trouver les entreprises qui vont recruter près de chez soi",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/logos/la-bonne-boite.png"
+            }
+        },
+        {
+            "id": "la-bonne-formation",
+            "type": "startup",
+            "attributes": {
+                "name": "La Bonne Formation",
+                "pitch": "Rechercher une formation efficace pour le retour à l'emploi et découvrir les financements possibles",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/la-bonne-formation.png"
+            }
+        },
+        {
+            "id": "le-taxi",
+            "type": "startup",
+            "attributes": {
+                "name": "Le Taxi",
+                "pitch": "Commander un taxi, rapidement",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/le-taxi.jpg"
+            }
+        },
+        {
+            "id": "maintenant",
+            "type": "startup",
+            "attributes": {
+                "name": "Maintenant!",
+                "pitch": "Recrutez des gens, pas des CV",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/maintenant.png"
+            }
+        },
+        {
+            "id": "mdph",
+            "type": "startup",
+            "attributes": {
+                "name": "MDPH en ligne",
+                "pitch": "Faciliter les demandes de compensation du handicap auprès des MDPH",
+                "status": "passation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/mdph.png"
+            }
+        },
+        {
+            "id": "memo",
+            "type": "startup",
+            "attributes": {
+                "name": "Memo",
+                "pitch": "Vos candidatures en un clin d'oeil",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/logos/memo.png"
+            }
+        },
+        {
+            "id": "mes-aides",
+            "type": "startup",
+            "attributes": {
+                "name": "Mes Aides",
+                "pitch": "Évaluer ses droits à 25 aides sociales. En moins de 7 minutes.",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/mes-aides.png"
+            }
+        },
+        {
+            "id": "mpal",
+            "type": "startup",
+            "attributes": {
+                "name": "Les aides de l’Anah",
+                "pitch": "Accéder rapidement et simplement aux aides à l’habitat privé",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/mpal.png"
+            }
+        },
+        {
+            "id": "mps",
+            "type": "startup",
+            "attributes": {
+                "name": "Marchés publics simplifiés",
+                "pitch": "Candidater en ligne à un Marché Public avec uniquement son SIRET",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/mps.jpg"
+            }
+        },
+        {
+            "id": "mvmd",
+            "type": "startup",
+            "attributes": {
+                "name": "Ma VAE, mon diplôme - MVMD",
+                "pitch": "Obtenir un diplôme grâce à vos compétences",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/mvmd.jpg"
+            }
+        },
+        {
+            "id": "ogptoolbox",
+            "type": "startup",
+            "attributes": {
+                "name": "OGP Toolbox",
+                "pitch": "Trouver des outils numériques pour améliorer la démocratie",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/logos/ogptoolbox.png"
+            }
+        },
+        {
+            "id": "open-academie",
+            "type": "startup",
+            "attributes": {
+                "name": "Open Académie",
+                "pitch": "Construire le lycée et le collège de demain",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/open-academie.png"
+            }
+        },
+        {
+            "id": "pix",
+            "type": "startup",
+            "attributes": {
+                "name": "PIX",
+                "pitch": "Mesurer, développer et valoriser ses compétences numériques",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/logos/pix.png"
+            }
+        },
+        {
+            "id": "plante-et-moi",
+            "type": "startup",
+            "attributes": {
+                "name": "Plante & Moi",
+                "pitch": "Augmenter la présence de la nature en ville",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/plante-et-moi.jpg"
+            }
+        },
+        {
+            "id": "psi",
+            "type": "startup",
+            "attributes": {
+                "name": "Prélèvement à la source pour les indépendants",
+                "pitch": "Simplifier radicalement le règlement des cotisations sociales par les indépendants",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/psi.png"
+            }
+        },
+        {
+            "id": "pole-emploi",
+            "type": "startup",
+            "attributes": {
+                "name": "Startups Pôle Emploi",
+                "pitch": "ARA, La Bonne Boîte, La Bonne Formation, Maintenant!, MVMD & Memo",
+                "status": "consolidation"
+            }
+        },
+        {
+            "id": "reserve-civique",
+            "type": "startup",
+            "attributes": {
+                "name": "Réserve civique",
+                "pitch": "Donner de son temps pour l'intérêt général",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/reserve-civique.png"
+            }
+        },
+        {
+            "id": "retraite",
+            "type": "startup",
+            "attributes": {
+                "name": "Mes démarches retraite pas à pas",
+                "pitch": "Obtenir en quelques clics la liste personnalisée de ses démarches de retraite",
+                "status": "success",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/retraite.png"
+            }
+        },
+        {
+            "id": "signaux-faibles",
+            "type": "startup",
+            "attributes": {
+                "name": "Signaux Faibles",
+                "pitch": "Mieux cibler les interventions en remédiation de l'État vers les entreprises en difficulté",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/signaux-faibles.png"
+            }
+        },
+        {
+            "id": "tps",
+            "type": "startup",
+            "attributes": {
+                "name": "Téléprocédures Simplifiées",
+                "pitch": "Dématérialiser n’importe quelle démarche administrative en quelques minutes",
+                "status": "consolidation",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/tps.png"
+            }
+        },
+        {
+            "id": "transport",
+            "type": "startup",
+            "attributes": {
+                "name": "transport.data.gouv.fr",
+                "pitch": "Rendre disponible, valoriser et améliorer les données transport",
+                "status": "construction",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/transport.png"
+            }
+        },
+        {
+            "id": "urbaclic",
+            "type": "startup",
+            "attributes": {
+                "name": "Urbaclic",
+                "pitch": "Accéder aux règles d'urbanisme en quelques clics",
+                "status": "death",
+                "screenshot-url": "https://beta.gouv.fr/img/startup/urbaclic.jpg"
+            }
+        },
+        {
+            "id": "openfisca",
+            "type": "startup",
+            "attributes": {
+                "name": "OpenFisca",
+                "pitch": "Modèles ouverts de calcul des systèmes socio-fiscaux",
+                "status": "success"
+            }
+        }
+    ]
+}
