@@ -328,7 +328,7 @@
             "attributes": {
                 "name": "Mes démarches retraite pas à pas",
                 "pitch": "Obtenir en quelques clics la liste personnalisée de ses démarches de retraite",
-                "status": "success",
+                "status": "death",
                 "screenshot-url": "https://beta.gouv.fr/img/startup/retraite.png"
             }
         },
