@@ -108,11 +108,6 @@ export default Ember.Component.extend(EKMixin, {
 
     if (Date.parse(new Date()) >= endTime) {
       this.get('hifi').play('assets/sounds/gong.mp3');
-      if (state === 'startups') {
-        this.send('nextStartup');
-      } else {
-        this.send('goHome');
-      }
     }
   },
 
