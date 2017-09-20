@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { EKMixin, keyUp } from 'ember-keyboard';
 
+const BLACKLIST = ['urbaclic', 'retraite', 'ogptoolbox', 'api-geo'];
+
 export default Ember.Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
   STARTUP_SLIDE_DURATION: 65,
@@ -155,7 +157,11 @@ export default Ember.Component.extend(EKMixin, {
   incubateurStartups: Ember.computed('activeStartups', function() {
     return this.get('activeStartups').rejectBy('status', 'success')
   }),
-  friendsStartups: Ember.computed.filterBy('activeStartups', 'status', 'success'),
+  friendsStartups: Ember.computed('activeStartups', function() {
+    return this.get('activeStartups').filter(function(startup) {
+      return startup.get('status') === 'success' && BLACKLIST.indexOf(startup.get('id')) < 0;
+    });
+  }),
   shuffledIncubateurStartups: Ember.computed('incubateurStartups', function() {
     return this.shuffle(this.get('incubateurStartups'));
   }),
