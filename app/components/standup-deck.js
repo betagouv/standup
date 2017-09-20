@@ -162,10 +162,10 @@ export default Ember.Component.extend(EKMixin, {
       return startup.get('status') === 'success' && BLACKLIST.indexOf(startup.get('id')) < 0;
     });
   }),
-  shuffledIncubateurStartups: Ember.computed('incubateurStartups', function() {
-    return this.shuffle(this.get('incubateurStartups'));
+  combinedStartups: Ember.computed.union('incubateurStartups', 'friendsStartups'),
+  startups: Ember.computed('combinedStartups', function() {
+    return this.shuffle(this.get('combinedStartups'));
   }),
-  startups: Ember.computed.union('shuffledIncubateurStartups', 'friendsStartups'),
   currentStartup: Ember.computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
