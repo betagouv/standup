@@ -1,7 +1,13 @@
 import Ember from 'ember';
 import { EKMixin, keyUp } from 'ember-keyboard';
 
-const BLACKLIST = ['urbaclic', 'retraite', 'ogptoolbox', 'api-geo'];
+const WHITELIST = [
+  'api-entreprise',
+  'api-geo',
+  'ban',
+  'data.gouv.fr',
+  'geo.data.gouv.fr'
+];
 
 export default Ember.Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
@@ -159,7 +165,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
   friendsStartups: Ember.computed('activeStartups', function() {
     return this.get('activeStartups').filter(function(startup) {
-      return startup.get('status') === 'success' && BLACKLIST.indexOf(startup.get('id')) < 0;
+      return startup.get('status') === 'success' && WHITELIST.indexOf(startup.get('id')) >= 0;
     });
   }),
   combinedStartups: Ember.computed.union('incubateurStartups', 'friendsStartups'),
