@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     }, {
       id: 'alpha',
       name: 'Alpha',
-      pitch: '',
+      pitch: 'La 1ère formation à l\'innovation dans le secteur public basée sur la méthode Startups d\'État ',
       status: 'construction'
     });
 
