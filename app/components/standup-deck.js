@@ -7,7 +7,8 @@ const WHITELIST = [
   'ban',
   'data.gouv.fr',
   'geo.data.gouv.fr',
-  'openfisca'
+  'openfisca',
+  'alpha'
 ];
 
 export default Ember.Component.extend(EKMixin, {
