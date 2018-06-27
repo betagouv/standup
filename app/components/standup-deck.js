@@ -163,11 +163,11 @@ export default Ember.Component.extend(EKMixin, {
     return this.get('model').rejectBy('status', 'death')
   }),
   incubateurStartups: Ember.computed('activeStartups', function() {
-    return this.get('activeStartups').rejectBy('status', 'success')
+    return this.get('activeStartups').rejectBy('status', 'consolidation')
   }),
   friendsStartups: Ember.computed('activeStartups', function() {
     return this.get('activeStartups').filter(function(startup) {
-      return startup.get('status') === 'success' && WHITELIST.indexOf(startup.get('id')) >= 0;
+      return startup.get('status') === 'consolidation' && WHITELIST.indexOf(startup.get('id')) >= 0;
     });
   }),
   combinedStartups: Ember.computed.union('incubateurStartups', 'friendsStartups'),
