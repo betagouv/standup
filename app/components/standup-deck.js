@@ -169,6 +169,14 @@ export default Ember.Component.extend(EKMixin, {
   currentStartup: Ember.computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
+  title: Ember.computed('state', 'currentStartup', function() {
+    switch(this.get('state')) {
+      case 'startups':
+        return this.get('currentStartup.name');
+      case 'meta':
+        return "Sujets transverses";
+    }
+  }),
   formattedElapsedSeconds: Ember.computed('elapsedSeconds', function() {
     return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
   }),

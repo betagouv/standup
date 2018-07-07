@@ -3,7 +3,7 @@
   <a href="#" {{action "nextSlide"}} class="start-button">COMMENCER</a>
 {{else if (eq state "startups")}}
   {{timed-slide
-    title=currentStartup.name
+    title=title
     subtitle=currentStartup.pitch
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
@@ -12,7 +12,7 @@
     nextSlide=nextSlide}}
 {{else if (eq state "meta")}}
   {{timed-slide
-    title="Sujets transverses"
+    title=title
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
