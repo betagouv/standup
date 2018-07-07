@@ -4,7 +4,7 @@
 {{else if (eq state "startups")}}
   {{timed-slide
     title=title
-    subtitle=currentStartup.pitch
+    subtitle=subtitle
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
@@ -13,6 +13,7 @@
 {{else if (eq state "meta")}}
   {{timed-slide
     title=title
+    subtitle=subtitle
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon

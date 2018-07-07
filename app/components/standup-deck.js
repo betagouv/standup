@@ -177,6 +177,14 @@ export default Ember.Component.extend(EKMixin, {
         return "Sujets transverses";
     }
   }),
+  subtitle: Ember.computed('state', 'currentStartup', function() {
+    switch(this.get('state')) {
+      case 'startups':
+        return this.get('currentStartup.pitch');
+      case 'meta':
+        return '';
+    }
+  }),
   formattedElapsedSeconds: Ember.computed('elapsedSeconds', function() {
     return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
   }),
