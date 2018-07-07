@@ -30,21 +30,28 @@ export default Ember.Component.extend(EKMixin, {
   elapsedMinutes: null,
 
   actions: {
-    start: function() {
-      this.setTimerForState('startups');
-      this.set('state', 'startups');
-    },
-
-    nextStartup: function() {
+    nextSlide: function() {
       clearInterval(this.get('timer'));
 
-      if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
-        this.setTimerForState('startups');
-        this.set('startupIndex', this.get('startupIndex') + 1);
-      } else {
-        this.set('startupIndex', 0);
-        this.setTimerForState('meta');
-        this.set('state', 'meta');
+      switch(this.get('state')) {
+        case 'home':
+          this.setTimerForState('startups');
+          this.set('state', 'startups');
+          break;
+        case 'startups':
+          if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
+            this.setTimerForState('startups');
+            this.set('startupIndex', this.get('startupIndex') + 1);
+          } else {
+            this.set('startupIndex', 0);
+            this.setTimerForState('meta');
+            this.set('state', 'meta');
+          }
+          break;
+        case 'meta':
+          clearInterval(this.get('timer'));
+          this.set('state', 'home');
+          break;
       }
     },
 
@@ -66,11 +73,6 @@ export default Ember.Component.extend(EKMixin, {
           this.set('startupIndex', this.get('startups.length') - 1);
           break;
       }
-    },
-
-    goHome: function () {
-      clearInterval(this.get('timer'));
-      this.set('state', 'home');
     }
   },
 
@@ -84,17 +86,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
-    switch(this.get('state')) {
-      case 'home':
-        this.send('start');
-        break;
-      case 'startups':
-        this.send('nextStartup');
-        break;
-      case 'meta':
-        this.send('goHome');
-        break;
-    }
+    this.send('nextSlide');
   }),
 
   leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
