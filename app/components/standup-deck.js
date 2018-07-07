@@ -151,16 +151,21 @@ export default Ember.Component.extend(EKMixin, {
     };
   },
 
-  activeStartups: Ember.computed('model', function() {
-    return this.get('model').rejectBy('status', 'death')
+  dinsicStartups: Ember.computed('model', function() {
+    return this.get('model').filterBy('incubator', 'dinsic');
   }),
-  incubateurStartups: Ember.computed('activeStartups', function() {
-    return this.get('activeStartups').rejectBy('status', 'consolidation')
+  activeDinsicStartups: Ember.computed('model', function() {
+    return this.get('dinsicStartups').rejectBy('status', 'death');
   }),
-  friendsStartups: Ember.computed('activeStartups', function() {
-    return this.get('activeStartups').filter(function(startup) {
-      return startup.get('status') === 'consolidation' && WHITELIST.indexOf(startup.get('id')) >= 0;
-    });
+  incubateurStartups: Ember.computed('activeDinsicStartups', function() {
+    return this.get('activeDinsicStartups').rejectBy('status', 'consolidation');
+  }),
+  friendsStartups: Ember.computed('activeDinsicStartups', function() {
+    return this.get('activeDinsicStartups')
+      .filterBy('status', 'consolidation')
+      .filter(function(startup) {
+        return WHITELIST.indexOf(startup.get('id')) >= 0;
+      });
   }),
   combinedStartups: Ember.computed.union('incubateurStartups', 'friendsStartups'),
   startups: Ember.computed('combinedStartups', function() {
