@@ -44,7 +44,7 @@ test('it sends an action on click', function(assert) {
     didReceiveAction = true;
   });
 
-  this.render(hbs`{{timed-slide goToNextSlide=(action "nextStartup")}}`);
+  this.render(hbs`{{timed-slide onClick=(action "nextStartup")}}`);
   this.$('div').click();
 
   assert.ok(didReceiveAction);
