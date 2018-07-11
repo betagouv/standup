@@ -55,7 +55,7 @@ export default Ember.Component.extend(EKMixin, {
       }
     },
 
-    previousSlide: function() {
+    goToPreviousSlide: function() {
       clearInterval(this.get('timer'));
 
       switch(this.get('state')) {
@@ -90,7 +90,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
-    this.send('previousSlide');
+    this.send('goToPreviousSlide');
   }),
 
   setTimerForState: function(state) {
