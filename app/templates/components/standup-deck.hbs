@@ -1,21 +1,13 @@
 {{#if (eq state "home")}}
   <h1>STAND-UP</h1>
-  <a href="#" {{action "start"}} class="start-button">COMMENCER</a>
-{{else if (eq state "startups")}}
+  <a href="#" {{action "goToNextSlide"}} class="start-button">COMMENCER</a>
+{{else}}
   {{timed-slide
-    title=currentStartup.name
-    subtitle=currentStartup.pitch
+    title=title
+    subtitle=subtitle
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
-    next=(action "nextStartup")
-    nextSlide=nextSlide}}
-{{else if (eq state "meta")}}
-  {{timed-slide
-    title="Sujets transverses"
-    formattedElapsedMinutes=formattedElapsedMinutes
-    formattedElapsedSeconds=formattedElapsedSeconds
-    isEndingSoon=isEndingSoon
-    next=(action "goHome")
-    nextSlide="fin"}}
+    onClick=(action "goToNextSlide")
+    nextSlideName=nextSlideName}}
 {{/if}}

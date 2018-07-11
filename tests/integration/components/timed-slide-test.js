@@ -10,7 +10,7 @@ test('it renders', function(assert) {
   this.set('startupPitch', 'Such pitch');
   this.set('elapsedMinutes', '1');
   this.set('elapsedSeconds', '59');
-  this.set('nextSlide', 'Next startup');
+  this.set('nextSlideName', 'Next startup');
 
   this.render(hbs`
     {{timed-slide
@@ -18,7 +18,7 @@ test('it renders', function(assert) {
       subtitle=startupPitch
       formattedElapsedMinutes=elapsedMinutes
       formattedElapsedSeconds=elapsedSeconds
-      nextSlide=nextSlide}}
+      nextSlideName=nextSlideName}}
   `);
 
   assert.equal(this.$('.timed-slide__title').text().trim(),     'My startup name');
@@ -44,7 +44,7 @@ test('it sends an action on click', function(assert) {
     didReceiveAction = true;
   });
 
-  this.render(hbs`{{timed-slide next=(action "nextStartup")}}`);
+  this.render(hbs`{{timed-slide onClick=(action "nextStartup")}}`);
   this.$('div').click();
 
   assert.ok(didReceiveAction);

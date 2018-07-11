@@ -4,6 +4,6 @@ export default Ember.Component.extend({
   classNames: ['container'],
 
   click() {
-    this.get('next')();
+    this.get('onClick')();
   }
 });

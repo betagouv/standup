@@ -30,25 +30,32 @@ export default Ember.Component.extend(EKMixin, {
   elapsedMinutes: null,
 
   actions: {
-    start: function() {
-      this.setTimerForState('startups');
-      this.set('state', 'startups');
-    },
-
-    nextStartup: function() {
+    goToNextSlide: function() {
       clearInterval(this.get('timer'));
 
-      if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
-        this.setTimerForState('startups');
-        this.set('startupIndex', this.get('startupIndex') + 1);
-      } else {
-        this.set('startupIndex', 0);
-        this.setTimerForState('meta');
-        this.set('state', 'meta');
+      switch(this.get('state')) {
+        case 'home':
+          this.setTimerForState('startups');
+          this.set('state', 'startups');
+          break;
+        case 'startups':
+          if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
+            this.setTimerForState('startups');
+            this.set('startupIndex', this.get('startupIndex') + 1);
+          } else {
+            this.set('startupIndex', 0);
+            this.setTimerForState('meta');
+            this.set('state', 'meta');
+          }
+          break;
+        case 'meta':
+          clearInterval(this.get('timer'));
+          this.set('state', 'home');
+          break;
       }
     },
 
-    previousSlide: function() {
+    goToPreviousSlide: function() {
       clearInterval(this.get('timer'));
 
       switch(this.get('state')) {
@@ -66,11 +73,6 @@ export default Ember.Component.extend(EKMixin, {
           this.set('startupIndex', this.get('startups.length') - 1);
           break;
       }
-    },
-
-    goHome: function () {
-      clearInterval(this.get('timer'));
-      this.set('state', 'home');
     }
   },
 
@@ -84,21 +86,11 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
-    switch(this.get('state')) {
-      case 'home':
-        this.send('start');
-        break;
-      case 'startups':
-        this.send('nextStartup');
-        break;
-      case 'meta':
-        this.send('goHome');
-        break;
-    }
+    this.send('goToNextSlide');
   }),
 
   leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
-    this.send('previousSlide');
+    this.send('goToPreviousSlide');
   }),
 
   setTimerForState: function(state) {
@@ -177,6 +169,22 @@ export default Ember.Component.extend(EKMixin, {
   currentStartup: Ember.computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
+  title: Ember.computed('state', 'currentStartup', function() {
+    switch(this.get('state')) {
+      case 'startups':
+        return this.get('currentStartup.name');
+      case 'meta':
+        return "Sujets transverses";
+    }
+  }),
+  subtitle: Ember.computed('state', 'currentStartup', function() {
+    switch(this.get('state')) {
+      case 'startups':
+        return this.get('currentStartup.pitch');
+      case 'meta':
+        return '';
+    }
+  }),
   formattedElapsedSeconds: Ember.computed('elapsedSeconds', function() {
     return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
   }),
@@ -190,11 +198,15 @@ export default Ember.Component.extend(EKMixin, {
       return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   }),
-  nextSlide: Ember.computed('startupIndex', function() {
-    if (this.get('startupIndex') > this.get('startups.length') - 2) {
-      return 'Sujets transverses';
+  nextSlideName: Ember.computed('state', 'startupIndex', function() {
+    if (this.get('state') === 'startups') {
+      if (this.get('startupIndex') > this.get('startups.length') - 2) {
+        return 'Sujets transverses';
+      } else {
+        return this.get('startups')[this.get('startupIndex') + 1].get('name');
+      }
     } else {
-      return this.get('startups')[this.get('startupIndex') + 1].get('name');
+      return 'fin';
     }
   })
 });
