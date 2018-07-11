@@ -30,7 +30,7 @@ export default Ember.Component.extend(EKMixin, {
   elapsedMinutes: null,
 
   actions: {
-    nextSlide: function() {
+    goToNextSlide: function() {
       clearInterval(this.get('timer'));
 
       switch(this.get('state')) {
@@ -86,7 +86,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
-    this.send('nextSlide');
+    this.send('goToNextSlide');
   }),
 
   leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
@@ -198,7 +198,7 @@ export default Ember.Component.extend(EKMixin, {
       return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   }),
-  nextSlide: Ember.computed('state', 'startupIndex', function() {
+  nextSlideName: Ember.computed('state', 'startupIndex', function() {
     if (this.get('state') === 'startups') {
       if (this.get('startupIndex') > this.get('startups.length') - 2) {
         return 'Sujets transverses';

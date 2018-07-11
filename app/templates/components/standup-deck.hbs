@@ -1,6 +1,6 @@
 {{#if (eq state "home")}}
   <h1>STAND-UP</h1>
-  <a href="#" {{action "nextSlide"}} class="start-button">COMMENCER</a>
+  <a href="#" {{action "goToNextSlide"}} class="start-button">COMMENCER</a>
 {{else}}
   {{timed-slide
     title=title
@@ -8,6 +8,6 @@
     formattedElapsedMinutes=formattedElapsedMinutes
     formattedElapsedSeconds=formattedElapsedSeconds
     isEndingSoon=isEndingSoon
-    next=(action "nextSlide")
-    nextSlide=nextSlide}}
+    goToNextSlide=(action "goToNextSlide")
+    nextSlideName=nextSlideName}}
 {{/if}}
