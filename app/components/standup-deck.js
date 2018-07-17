@@ -16,6 +16,10 @@ export default Ember.Component.extend(EKMixin, {
   STARTUP_SLIDE_DURATION: 65,
   // Duration (65) - 15
   STARTUP_SLIDE_ENDS_SOON_AT: 50,
+  // Slide (120) + buffer (10)
+  INCUBATOR_SLIDE_DURATION: 130,
+  // Duration (130) - 15
+  INCUBATOR_SLIDE_ENDS_SOON_AT: 115,
   // Slide (300) + buffer (15)
   META_SLIDE_TOTAL_DURATION: 315,
   // Duration (315) - 60
@@ -25,6 +29,7 @@ export default Ember.Component.extend(EKMixin, {
   socket: Ember.inject.service('websocket'),
   state: 'home',
   startupIndex: 0,
+  incubatorIndex: 0,
   timer: null,
   elapsedSeconds: null,
   elapsedMinutes: null,
@@ -44,6 +49,16 @@ export default Ember.Component.extend(EKMixin, {
             this.set('startupIndex', this.get('startupIndex') + 1);
           } else {
             this.set('startupIndex', 0);
+            this.setTimerForState('incubators');
+            this.set('state', 'incubators');
+          }
+          break;
+        case 'incubators':
+          if (this.get('incubatorIndex') < (this.get('groupedOtherIncubatorsStartups.length') - 1)) {
+            this.setTimerForState('incubators');
+            this.set('incubatorIndex', this.get('incubatorIndex') + 1);
+          } else {
+            this.set('incubatorIndex', 0);
             this.setTimerForState('meta');
             this.set('state', 'meta');
           }
@@ -67,10 +82,20 @@ export default Ember.Component.extend(EKMixin, {
             this.set('startupIndex', this.get('startupIndex') - 1);
           }
           break;
+        case 'incubators':
+          if (this.get('incubatorIndex') === 0) {
+            this.setTimerForState('startups');
+            this.set('state', 'startups');
+            this.set('startupIndex', this.get('startups.length') - 1);
+          } else {
+            this.setTimerForState('incubators');
+            this.set('incubatorIndex', this.get('incubatorIndex') - 1);
+          }
+          break;
         case 'meta':
           this.setTimerForState('startups');
           this.set('state', 'startups');
-          this.set('startupIndex', this.get('startups.length') - 1);
+          this.set('incubatorIndex', this.get('groupedOtherIncubatorsStartups.length') - 1);
           break;
       }
     }
@@ -94,10 +119,26 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   setTimerForState: function(state) {
-    var seconds = state === 'startups' ? this.get('STARTUP_SLIDE_DURATION') : this.get('META_SLIDE_DURATION'),
-        startTime = Date.parse(new Date()),
-        endTime = this.endTime(seconds),
-        timer = setInterval(function() { this.tick(state, startTime, endTime); }.bind(this), 1000);
+    var seconds,
+        startTime,
+        endTime,
+        timer;
+
+    switch(state) {
+      case 'startups':
+        seconds = this.get('STARTUP_SLIDE_DURATION');
+        break
+      case 'incubators':
+        seconds = this.get('INCUBATOR_SLIDE_DURATION');
+        break
+      case 'meta':
+        seconds = this.get('META_SLIDE_DURATION');
+        break
+    }
+
+    startTime = Date.parse(new Date()),
+    endTime = this.endTime(seconds),
+    timer = setInterval(function() { this.tick(state, startTime, endTime); }.bind(this), 1000);
 
     this.set('timer', timer);
     this.tick(state, startTime, endTime);
@@ -174,18 +215,39 @@ export default Ember.Component.extend(EKMixin, {
   currentStartup: Ember.computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
-  title: Ember.computed('state', 'currentStartup', function() {
+  groupedOtherIncubatorsStartups: Ember.computed('model', function() {
+    var otherIncubatorsStartups = this.get('model').rejectBy('incubator', 'dinsic'),
+        otherIncubators = otherIncubatorsStartups.mapBy('incubator').uniq(),
+        groupedIncubatorsStartups = [];
+
+    otherIncubators.forEach(function(item) {
+      groupedIncubatorsStartups.push({
+        incubator: item,
+        startups: otherIncubatorsStartups.filterBy('incubator', item)
+      });
+    });
+
+    return groupedIncubatorsStartups;
+  }),
+  currentIncubator: Ember.computed('groupedOtherIncubatorsStartups', 'incubatorIndex', function() {
+    return this.get('groupedOtherIncubatorsStartups')[this.get('incubatorIndex')];
+  }),
+  title: Ember.computed('state', 'currentStartup', 'currentIncubator', function() {
     switch(this.get('state')) {
       case 'startups':
         return this.get('currentStartup.name');
+      case 'incubators':
+        return this.get('currentIncubator.incubator');
       case 'meta':
         return "Sujets transverses";
     }
   }),
-  subtitle: Ember.computed('state', 'currentStartup', function() {
+  subtitle: Ember.computed('state', 'currentStartup', 'currentIncubator', function() {
     switch(this.get('state')) {
       case 'startups':
         return this.get('currentStartup.pitch');
+      case 'incubators':
+        return this.get('currentIncubator.startups').mapBy('name').join(', ');
       case 'meta':
         return '';
     }
@@ -197,21 +259,31 @@ export default Ember.Component.extend(EKMixin, {
     return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
   }),
   isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
-    if (this.get('state') === 'startups') {
-      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
-    } else {
-      return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
+    switch(this.get('state')) {
+      case 'startups':
+        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
+      case 'incubators':
+        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('INCUBATOR_SLIDE_ENDS_SOON_AT');
+      case 'meta':
+        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   }),
-  nextSlideName: Ember.computed('state', 'startupIndex', function() {
-    if (this.get('state') === 'startups') {
-      if (this.get('startupIndex') > this.get('startups.length') - 2) {
-        return 'Sujets transverses';
-      } else {
-        return this.get('startups')[this.get('startupIndex') + 1].get('name');
-      }
-    } else {
-      return 'fin';
+  nextSlideName: Ember.computed('state', 'startupIndex', 'incubatorIndex', function() {
+    switch(this.get('state')) {
+      case 'startups':
+        if (this.get('startupIndex') > this.get('startups.length') - 2) {
+          return this.get('groupedOtherIncubatorsStartups.firstObject.incubator');
+        } else {
+          return this.get('startups')[this.get('startupIndex') + 1].get('name');
+        }
+      case 'incubators':
+          if (this.get('incubatorIndex') > this.get('groupedOtherIncubatorsStartups.length') - 2) {
+          return 'Sujets transverses';
+        } else {
+          return this.get('groupedOtherIncubatorsStartups')[this.get('incubatorIndex') + 1].incubator;
+        }
+      case 'meta':
+        return 'fin';
     }
   })
 });
