@@ -5,5 +5,6 @@ export default DS.Model.extend({
   owner: DS.attr('string'),
   website: DS.attr('string'),
   github: DS.attr('string'),
-  contact: DS.attr('string')
+  contact: DS.attr('string'),
+  startups: DS.hasMany('startup', { async: false })
 });

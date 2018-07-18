@@ -29,6 +29,7 @@ export default Component.extend(EKMixin, {
   // Duration (315) - 60
   META_SLIDE_ENDS_SOON_AT: 255,
 
+  store: service(),
   hifi: service(),
   state: 'home',
   startupIndex: 0,
@@ -57,10 +58,7 @@ export default Component.extend(EKMixin, {
           }
           break;
         case 'incubators':
-          if (
-            this.incubatorIndex <
-            this.groupedOtherIncubatorsStartups.length - 1
-          ) {
+          if (this.incubatorIndex < this.otherIncubators.length - 1) {
             this.setTimerForState('incubators');
             this.set('incubatorIndex', this.incubatorIndex + 1);
           } else {
@@ -101,10 +99,7 @@ export default Component.extend(EKMixin, {
         case 'meta':
           this.setTimerForState('startups');
           this.set('state', 'startups');
-          this.set(
-            'incubatorIndex',
-            this.groupedOtherIncubatorsStartups.length - 1
-          );
+          this.set('incubatorIndex', this.otherIncubators.length - 1);
           break;
       }
     }
@@ -194,8 +189,11 @@ export default Component.extend(EKMixin, {
     };
   },
 
+  dinsicIncubator: computed('model', function() {
+    return this.store.peekRecord('incubator', 'dinsic');
+  }),
   dinsicStartups: computed('model', function() {
-    return this.model.filterBy('incubator', 'dinsic');
+    return this.model.filterBy('incubator', this.dinsicIncubator);
   }),
   activeDinsicStartups: computed('dinsicStartups', function() {
     return this.dinsicStartups.rejectBy('status', 'death');
@@ -215,33 +213,21 @@ export default Component.extend(EKMixin, {
   currentStartup: computed('startups', 'startupIndex', function() {
     return this.startups[this.startupIndex];
   }),
-  groupedOtherIncubatorsStartups: computed('model', function() {
-    let otherIncubatorsStartups = this.model.rejectBy('incubator', 'dinsic'),
-      otherIncubators = otherIncubatorsStartups.mapBy('incubator').uniq(),
-      groupedIncubatorsStartups = [];
-
-    otherIncubators.forEach(item => {
-      groupedIncubatorsStartups.push({
-        incubator: item,
-        startups: otherIncubatorsStartups.filterBy('incubator', item)
-      });
-    });
-
-    return groupedIncubatorsStartups;
+  otherIncubators: computed('model', function() {
+    return this.store
+      .peekAll('incubator')
+      .rejectBy('id', 'dinsic')
+      .toArray();
   }),
-  currentIncubator: computed(
-    'groupedOtherIncubatorsStartups',
-    'incubatorIndex',
-    function() {
-      return this.groupedOtherIncubatorsStartups[this.incubatorIndex];
-    }
-  ),
+  currentIncubator: computed('otherIncubators', 'incubatorIndex', function() {
+    return this.otherIncubators[this.incubatorIndex];
+  }),
   title: computed('state', 'currentStartup', 'currentIncubator', function() {
     switch (this.state) {
       case 'startups':
         return this.currentStartup.name;
       case 'incubators':
-        return this.currentIncubator.incubator;
+        return this.currentIncubator.title;
       case 'meta':
         return 'Sujets transverses';
     }
@@ -282,19 +268,15 @@ export default Component.extend(EKMixin, {
       switch (this.state) {
         case 'startups':
           if (this.startupIndex > this.startups.length - 2) {
-            return this.groupedOtherIncubatorsStartups[0].incubator;
+            return this.otherIncubators[0].title;
           } else {
             return this.startups[this.startupIndex + 1].name;
           }
         case 'incubators':
-          if (
-            this.incubatorIndex >
-            this.groupedOtherIncubatorsStartups.length - 2
-          ) {
+          if (this.incubatorIndex > this.otherIncubators.length - 2) {
             return 'Sujets transverses';
           } else {
-            return this.groupedOtherIncubatorsStartups[this.incubatorIndex + 1]
-              .incubator;
+            return this.otherIncubators[this.incubatorIndex + 1].title;
           }
         case 'meta':
           return 'fin';
