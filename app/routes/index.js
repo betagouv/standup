@@ -1,23 +1,46 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  model() {
-    this.store.createRecord('startup', {
-      id: 'openfisca',
+const EXTRA_STARTUPS = [
+  {
+    id: 'openfisca',
+    type: 'startup',
+    attributes: {
       name: 'OpenFisca',
       pitch: 'Rendre le droit calculable',
-      status: 'success',
-      incubator: 'dinsic'
-    });
-
-    this.store.createRecord('startup', {
-      id: 'alpha',
+      status: 'success'
+    },
+    relationships: {
+      incubator: {
+        data: {
+          type: 'incubator',
+          id: 'dinsic'
+        }
+      }
+    }
+  },
+  {
+    id: 'alpha',
+    type: 'startup',
+    attributes: {
       name: 'Alpha',
       pitch:
-        "La 1ère formation à l'innovation dans le secteur public basée sur la méthode Startups d'État ",
-      status: 'construction',
-      incubator: 'dinsic'
-    });
+        "La 1re formation à l'innovation dans le secteur public basée sur la méthode Startups d'État",
+      status: 'construction'
+    },
+    relationships: {
+      incubator: {
+        data: {
+          type: 'incubator',
+          id: 'dinsic'
+        }
+      }
+    }
+  }
+];
+
+export default Route.extend({
+  model() {
+    this.store.push({ data: EXTRA_STARTUPS });
 
     return this.store.findAll('startup', { reload: true });
   }
