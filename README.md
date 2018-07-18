@@ -7,9 +7,8 @@ Standup is a simple web app that allows [beta.gouv.fr](https://beta.gouv.fr) to 
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Ember CLI](https://ember-cli.com/) (with NPM)
-* [PhantomJS](http://phantomjs.org/)
+* [Node.js](https://nodejs.org/) (with npm)
+* [Ember CLI](https://ember-cli.com/)
 
 To run the websockets server, you'll additionally need:
 
@@ -20,8 +19,7 @@ To run the websockets server, you'll additionally need:
 
 * `git clone <repository-url>` this repository
 * `cd standup`
-* `npm install`
-* `bower install` or `npm run bower -- install`
+* `yarn install`
 
 ### Websocket Server
 
@@ -30,18 +28,24 @@ To run the websockets server, you'll additionally need:
 
 ## Running / Development
 
-* `ember server` or `npm run start`
+* `ember server` or `yarn start`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
+* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ### Websocket Server
 
 * `cd wss`
 * `mix phoenix.server`
 
+## Linting
+
+* `yarn lint:js`
+* `yarn lint:js --fix`
+
 ## Running Tests
 
-* `ember test` or `npm test`
-* `ember test --server` or `npm run test -- --server`
+* `ember test` or `yarn test`
+* `ember test --server` or `yarn test --server`
 
 ### Websocket Server
 
@@ -50,8 +54,8 @@ To run the websockets server, you'll additionally need:
 
 ## Building
 
-* `ember build` or `npm run build` (development)
-* `ember build --environment production` or `npm run build -- --environment production` (production)
+* `ember build` or `yarn build` (development)
+* `ember build --prod` or `yarn build --prod` (production)
 
 ### Websocket Server
 
@@ -60,7 +64,7 @@ To run the websockets server, you'll additionally need:
 
 ## Deploying
 
-* `ember surge` or `npm run surge`
+* `ember surge` or `yarn surge`
 
 ### Websocket Server
 

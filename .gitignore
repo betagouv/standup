@@ -1,21 +1,26 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# Compiled output
-/dist
-/tmp
+# compiled output
+/dist/
+/tmp/
 /wss/_build
 /wss/*.ez
 
 # dependencies
-/node_modules
-/bower_components
-/wss/deps
+/bower_components/
+/node_modules/
 
 # misc
 /.sass-cache
 /connect.lock
-/coverage/*
+/coverage/
 /libpeerconnection.log
-npm-debug.log*
-testem.log
-erl_crash.dump
+/npm-debug.log*
+/testem.log
+/yarn-error.log
+/erl_crash.dump
+
+# ember-try
+/.node_modules.ember-try/
+/bower.json.ember-try
+/package.json.ember-try
