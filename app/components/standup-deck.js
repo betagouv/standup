@@ -259,13 +259,15 @@ export default Ember.Component.extend(EKMixin, {
     return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
   }),
   isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
+    var totalElapsedSeconds = this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds');
+
     switch(this.get('state')) {
       case 'startups':
-        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
       case 'incubators':
-        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('INCUBATOR_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.get('INCUBATOR_SLIDE_ENDS_SOON_AT');
       case 'meta':
-        return (this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds')) > this.get('META_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   }),
   nextSlideName: Ember.computed('state', 'startupIndex', 'incubatorIndex', function() {
