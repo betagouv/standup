@@ -6,14 +6,16 @@ export default Ember.Route.extend({
       id: 'openfisca',
       name: 'OpenFisca',
       pitch: 'Rendre le droit calculable',
-      status: 'success'
+      status: 'success',
+      incubator: 'dinsic'
     });
 
     this.get('store').createRecord('startup', {
       id: 'alpha',
       name: 'Alpha',
       pitch: 'La 1ère formation à l\'innovation dans le secteur public basée sur la méthode Startups d\'État ',
-      status: 'construction'
+      status: 'construction',
+      incubator: 'dinsic'
     });
 
     return this.get('store').findAll('startup', { reload: true });
