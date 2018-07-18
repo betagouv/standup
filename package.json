@@ -16,8 +16,7 @@
     "start": "ember serve",
     "test": "ember test",
     "surge": "ember surge",
-    "ember": "ember",
-    "bower": "bower"
+    "ember": "ember"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.7.0",
