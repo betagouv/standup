@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import { union } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { on } from '@ember/object/evented';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { EKMixin, keyUp } from 'ember-keyboard';
 
 const WHITELIST = [
@@ -11,7 +15,7 @@ const WHITELIST = [
   'alpha'
 ];
 
-export default Ember.Component.extend(EKMixin, {
+export default Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
   STARTUP_SLIDE_DURATION: 65,
   // Duration (65) - 15
@@ -25,8 +29,8 @@ export default Ember.Component.extend(EKMixin, {
   // Duration (315) - 60
   META_SLIDE_ENDS_SOON_AT: 255,
 
-  hifi: Ember.inject.service(),
-  socket: Ember.inject.service('websocket'),
+  hifi: service(),
+  socket: service('websocket'),
   state: 'home',
   startupIndex: 0,
   incubatorIndex: 0,
@@ -106,15 +110,15 @@ export default Ember.Component.extend(EKMixin, {
     this.get('socket').connect();
   },
 
-  activateKeyboard: Ember.on('init', function() {
+  activateKeyboard: on('init', function() {
     this.set('keyboardActivated', true);
   }),
 
-  rightArrowWasPressed: Ember.on(keyUp('ArrowRight'), function() {
+  rightArrowWasPressed: on(keyUp('ArrowRight'), function() {
     this.send('goToNextSlide');
   }),
 
-  leftArrowWasPressed: Ember.on(keyUp('ArrowLeft'), function() {
+  leftArrowWasPressed: on(keyUp('ArrowLeft'), function() {
     this.send('goToPreviousSlide');
   }),
 
@@ -192,30 +196,30 @@ export default Ember.Component.extend(EKMixin, {
     };
   },
 
-  dinsicStartups: Ember.computed('model', function() {
+  dinsicStartups: computed('model', function() {
     return this.get('model').filterBy('incubator', 'dinsic');
   }),
-  activeDinsicStartups: Ember.computed('model', function() {
+  activeDinsicStartups: computed('model', function() {
     return this.get('dinsicStartups').rejectBy('status', 'death');
   }),
-  incubateurStartups: Ember.computed('activeDinsicStartups', function() {
+  incubateurStartups: computed('activeDinsicStartups', function() {
     return this.get('activeDinsicStartups').rejectBy('status', 'consolidation');
   }),
-  friendsStartups: Ember.computed('activeDinsicStartups', function() {
+  friendsStartups: computed('activeDinsicStartups', function() {
     return this.get('activeDinsicStartups')
       .filterBy('status', 'consolidation')
       .filter(function(startup) {
         return WHITELIST.indexOf(startup.get('id')) >= 0;
       });
   }),
-  combinedStartups: Ember.computed.union('incubateurStartups', 'friendsStartups'),
-  startups: Ember.computed('combinedStartups', function() {
+  combinedStartups: union('incubateurStartups', 'friendsStartups'),
+  startups: computed('combinedStartups', function() {
     return this.shuffle(this.get('combinedStartups'));
   }),
-  currentStartup: Ember.computed('startups', 'startupIndex', function() {
+  currentStartup: computed('startups', 'startupIndex', function() {
     return this.get('startups')[this.get('startupIndex')];
   }),
-  groupedOtherIncubatorsStartups: Ember.computed('model', function() {
+  groupedOtherIncubatorsStartups: computed('model', function() {
     var otherIncubatorsStartups = this.get('model').rejectBy('incubator', 'dinsic'),
         otherIncubators = otherIncubatorsStartups.mapBy('incubator').uniq(),
         groupedIncubatorsStartups = [];
@@ -229,10 +233,10 @@ export default Ember.Component.extend(EKMixin, {
 
     return groupedIncubatorsStartups;
   }),
-  currentIncubator: Ember.computed('groupedOtherIncubatorsStartups', 'incubatorIndex', function() {
+  currentIncubator: computed('groupedOtherIncubatorsStartups', 'incubatorIndex', function() {
     return this.get('groupedOtherIncubatorsStartups')[this.get('incubatorIndex')];
   }),
-  title: Ember.computed('state', 'currentStartup', 'currentIncubator', function() {
+  title: computed('state', 'currentStartup', 'currentIncubator', function() {
     switch(this.get('state')) {
       case 'startups':
         return this.get('currentStartup.name');
@@ -242,7 +246,7 @@ export default Ember.Component.extend(EKMixin, {
         return "Sujets transverses";
     }
   }),
-  subtitle: Ember.computed('state', 'currentStartup', 'currentIncubator', function() {
+  subtitle: computed('state', 'currentStartup', 'currentIncubator', function() {
     switch(this.get('state')) {
       case 'startups':
         return this.get('currentStartup.pitch');
@@ -252,13 +256,13 @@ export default Ember.Component.extend(EKMixin, {
         return '';
     }
   }),
-  formattedElapsedSeconds: Ember.computed('elapsedSeconds', function() {
+  formattedElapsedSeconds: computed('elapsedSeconds', function() {
     return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
   }),
-  formattedElapsedMinutes: Ember.computed('elapsedMinutes', function() {
+  formattedElapsedMinutes: computed('elapsedMinutes', function() {
     return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
   }),
-  isEndingSoon: Ember.computed('elapsedMinutes', 'elapsedSeconds', function () {
+  isEndingSoon: computed('elapsedMinutes', 'elapsedSeconds', function () {
     var totalElapsedSeconds = this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds');
 
     switch(this.get('state')) {
@@ -270,7 +274,7 @@ export default Ember.Component.extend(EKMixin, {
         return totalElapsedSeconds > this.get('META_SLIDE_ENDS_SOON_AT');
     }
   }),
-  nextSlideName: Ember.computed('state', 'startupIndex', 'incubatorIndex', function() {
+  nextSlideName: computed('state', 'startupIndex', 'incubatorIndex', function() {
     switch(this.get('state')) {
       case 'startups':
         if (this.get('startupIndex') > this.get('startups.length') - 2) {
