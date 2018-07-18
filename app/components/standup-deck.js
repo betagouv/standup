@@ -20,10 +20,6 @@ export default Component.extend(EKMixin, {
   STARTUP_SLIDE_DURATION: 65,
   // Duration (65) - 15
   STARTUP_SLIDE_ENDS_SOON_AT: 50,
-  // Slide (120) + buffer (10)
-  INCUBATOR_SLIDE_DURATION: 130,
-  // Duration (130) - 15
-  INCUBATOR_SLIDE_ENDS_SOON_AT: 115,
   // Slide (300) + buffer (15)
   META_SLIDE_TOTAL_DURATION: 315,
   // Duration (315) - 60
@@ -126,7 +122,7 @@ export default Component.extend(EKMixin, {
         seconds = this.STARTUP_SLIDE_DURATION;
         break;
       case 'incubators':
-        seconds = this.INCUBATOR_SLIDE_DURATION;
+        seconds = this.incubatorSlideDuration;
         break;
       case 'meta':
         seconds = this.META_SLIDE_DURATION;
@@ -222,6 +218,12 @@ export default Component.extend(EKMixin, {
   currentIncubator: computed('otherIncubators', 'incubatorIndex', function() {
     return this.otherIncubators[this.incubatorIndex];
   }),
+  incubatorSlideDuration: computed('currentIncubator', function() {
+    return 60 * this.currentIncubator.startups.length;
+  }),
+  incubatorSlideEndsSoonAt: computed('incubatorSlideDuration', function() {
+    return this.incubatorSlideDuration - 30;
+  }),
   title: computed('state', 'currentStartup', 'currentIncubator', function() {
     switch (this.state) {
       case 'startups':
@@ -255,7 +257,7 @@ export default Component.extend(EKMixin, {
       case 'startups':
         return totalElapsedSeconds > this.STARTUP_SLIDE_ENDS_SOON_AT;
       case 'incubators':
-        return totalElapsedSeconds > this.INCUBATOR_SLIDE_ENDS_SOON_AT;
+        return totalElapsedSeconds > this.incubatorSlideEndsSoonAt;
       case 'meta':
         return totalElapsedSeconds > this.META_SLIDE_ENDS_SOON_AT;
     }
