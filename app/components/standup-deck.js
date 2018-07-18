@@ -130,7 +130,7 @@ export default Component.extend(EKMixin, {
   }),
 
   setTimerForState(state) {
-    let seconds, startTime, endTime, timer;
+    let seconds;
 
     switch (state) {
       case 'startups':
@@ -144,9 +144,9 @@ export default Component.extend(EKMixin, {
         break;
     }
 
-    (startTime = Date.parse(new Date())),
-      (endTime = this.endTime(seconds)),
-      (timer = setInterval(() => this.tick(state, startTime, endTime), 1000));
+    let startTime = Date.parse(new Date());
+    let endTime = this.endTime(seconds);
+    let timer = setInterval(() => this.tick(state, startTime, endTime), 1000);
 
     this.set('timer', timer);
     this.tick(state, startTime, endTime);
