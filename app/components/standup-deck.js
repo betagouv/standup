@@ -30,7 +30,6 @@ export default Component.extend(EKMixin, {
   META_SLIDE_ENDS_SOON_AT: 255,
 
   hifi: service(),
-  socket: service('websocket'),
   state: 'home',
   startupIndex: 0,
   incubatorIndex: 0,
@@ -109,11 +108,6 @@ export default Component.extend(EKMixin, {
           break;
       }
     }
-  },
-
-  init: function() {
-    this._super();
-    this.socket.connect();
   },
 
   /* eslint ember/no-on-calls-in-components:0 */
