@@ -203,7 +203,7 @@ export default Component.extend(EKMixin, {
   dinsicStartups: computed('model', function() {
     return this.model.filterBy('incubator', 'dinsic');
   }),
-  activeDinsicStartups: computed('model', function() {
+  activeDinsicStartups: computed('dinsicStartups', function() {
     return this.dinsicStartups.rejectBy('status', 'death');
   }),
   incubateurStartups: computed('activeDinsicStartups', function() {
