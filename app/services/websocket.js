@@ -7,6 +7,7 @@ export default PhoenixSocket.extend({
   // Initializes webscocket client.
   // Adds event listeners on 'open', 'error' and 'close'.
   init() {
+    this._super(...arguments);
     this.on('open', this.open);
     this.on('error', this.error);
     this.on('close', this.close);
@@ -14,20 +15,21 @@ export default PhoenixSocket.extend({
 
   // Connects to the websocket server.
   connect() {
-    this._super(this.get('websocketServerUrl'));
+    this._super(this.websocketServerUrl);
     return this;
   },
 
   // Joins the 'standup' channel, if connection state is 'open'.
   join() {
-    let socket  = this.get('socket');
-    let channel = this.get('channel');
+    let socket = this.socket;
+    let channel = this.channel;
 
-    if(!socket || socket.connectionState() !== 'open') {
+    if (!socket || socket.connectionState() !== 'open') {
       return this;
     }
 
-    channel.join()
+    channel
+      .join()
       .receive('ok', this.ok)
       .receive('error', this.error)
       .receive('timeout', this.timeout);
@@ -40,7 +42,7 @@ export default PhoenixSocket.extend({
   // Sets channel to 'standup' and calls `this.join()`.
   open() {
     console.info('Socket connection open!'); // eslint-disable-line no-console
-    let socket  = this.get('socket');
+    let socket = this.socket;
     let channel = socket.channel('standup');
 
     this.set('channel', channel);
@@ -69,7 +71,7 @@ export default PhoenixSocket.extend({
 
   // Logs a channel join/push timeout.
   timeout() {
-    console.warn('Can\'t join channel, networking issues?'); // eslint-disable-line no-console
+    console.warn("Can't join channel, networking issues?"); // eslint-disable-line no-console
     return this;
   }
 });

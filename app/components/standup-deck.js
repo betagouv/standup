@@ -39,18 +39,18 @@ export default Component.extend(EKMixin, {
   elapsedMinutes: null,
 
   actions: {
-    goToNextSlide: function() {
-      clearInterval(this.get('timer'));
+    goToNextSlide() {
+      clearInterval(this.timer);
 
-      switch(this.get('state')) {
+      switch (this.state) {
         case 'home':
           this.setTimerForState('startups');
           this.set('state', 'startups');
           break;
         case 'startups':
-          if (this.get('startupIndex') < (this.get('startups.length') - 1)) {
+          if (this.startupIndex < this.startups.length - 1) {
             this.setTimerForState('startups');
-            this.set('startupIndex', this.get('startupIndex') + 1);
+            this.set('startupIndex', this.startupIndex + 1);
           } else {
             this.set('startupIndex', 0);
             this.setTimerForState('incubators');
@@ -58,9 +58,12 @@ export default Component.extend(EKMixin, {
           }
           break;
         case 'incubators':
-          if (this.get('incubatorIndex') < (this.get('groupedOtherIncubatorsStartups.length') - 1)) {
+          if (
+            this.incubatorIndex <
+            this.groupedOtherIncubatorsStartups.length - 1
+          ) {
             this.setTimerForState('incubators');
-            this.set('incubatorIndex', this.get('incubatorIndex') + 1);
+            this.set('incubatorIndex', this.incubatorIndex + 1);
           } else {
             this.set('incubatorIndex', 0);
             this.setTimerForState('meta');
@@ -68,48 +71,52 @@ export default Component.extend(EKMixin, {
           }
           break;
         case 'meta':
-          clearInterval(this.get('timer'));
+          clearInterval(this.timer);
           this.set('state', 'home');
           break;
       }
     },
 
-    goToPreviousSlide: function() {
-      clearInterval(this.get('timer'));
+    goToPreviousSlide() {
+      clearInterval(this.timer);
 
-      switch(this.get('state')) {
+      switch (this.state) {
         case 'startups':
-          if (this.get('startupIndex') === 0) {
+          if (this.startupIndex === 0) {
             this.set('state', 'home');
           } else {
             this.setTimerForState('startups');
-            this.set('startupIndex', this.get('startupIndex') - 1);
+            this.set('startupIndex', this.startupIndex - 1);
           }
           break;
         case 'incubators':
-          if (this.get('incubatorIndex') === 0) {
+          if (this.incubatorIndex === 0) {
             this.setTimerForState('startups');
             this.set('state', 'startups');
-            this.set('startupIndex', this.get('startups.length') - 1);
+            this.set('startupIndex', this.startups.length - 1);
           } else {
             this.setTimerForState('incubators');
-            this.set('incubatorIndex', this.get('incubatorIndex') - 1);
+            this.set('incubatorIndex', this.incubatorIndex - 1);
           }
           break;
         case 'meta':
           this.setTimerForState('startups');
           this.set('state', 'startups');
-          this.set('incubatorIndex', this.get('groupedOtherIncubatorsStartups.length') - 1);
+          this.set(
+            'incubatorIndex',
+            this.groupedOtherIncubatorsStartups.length - 1
+          );
           break;
       }
     }
   },
 
-  init: function () {
+  init: function() {
     this._super();
-    this.get('socket').connect();
+    this.socket.connect();
   },
 
+  /* eslint ember/no-on-calls-in-components:0 */
   activateKeyboard: on('init', function() {
     this.set('keyboardActivated', true);
   }),
@@ -122,46 +129,43 @@ export default Component.extend(EKMixin, {
     this.send('goToPreviousSlide');
   }),
 
-  setTimerForState: function(state) {
-    var seconds,
-        startTime,
-        endTime,
-        timer;
+  setTimerForState(state) {
+    let seconds, startTime, endTime, timer;
 
-    switch(state) {
+    switch (state) {
       case 'startups':
-        seconds = this.get('STARTUP_SLIDE_DURATION');
-        break
+        seconds = this.STARTUP_SLIDE_DURATION;
+        break;
       case 'incubators':
-        seconds = this.get('INCUBATOR_SLIDE_DURATION');
-        break
+        seconds = this.INCUBATOR_SLIDE_DURATION;
+        break;
       case 'meta':
-        seconds = this.get('META_SLIDE_DURATION');
-        break
+        seconds = this.META_SLIDE_DURATION;
+        break;
     }
 
-    startTime = Date.parse(new Date()),
-    endTime = this.endTime(seconds),
-    timer = setInterval(function() { this.tick(state, startTime, endTime); }.bind(this), 1000);
+    (startTime = Date.parse(new Date())),
+      (endTime = this.endTime(seconds)),
+      (timer = setInterval(() => this.tick(state, startTime, endTime), 1000));
 
     this.set('timer', timer);
     this.tick(state, startTime, endTime);
   },
 
-  tick: function(state, startTime, endTime) {
-    var elapsedTime = this.getElapsedTime(startTime);
+  tick(state, startTime, endTime) {
+    let elapsedTime = this.getElapsedTime(startTime);
     this.set('elapsedSeconds', elapsedTime.seconds);
     this.set('elapsedMinutes', elapsedTime.minutes);
 
     if (Date.parse(new Date()) >= endTime) {
-      this.get('hifi').play('assets/sounds/gong.mp3');
+      this.hifi.play('assets/sounds/gong.mp3');
     }
   },
 
-  shuffle: function(collection) {
-    var currentIndex = collection.length,
-        temporaryValue,
-        randomIndex;
+  shuffle(collection) {
+    let currentIndex = collection.length,
+      temporaryValue,
+      randomIndex;
 
     // While there remain elements to shuffle...
     while (currentIndex !== 0) {
@@ -178,53 +182,51 @@ export default Component.extend(EKMixin, {
     return collection;
   },
 
-  endTime: function(seconds) {
-    var time = new Date();
-    time.setSeconds(time.getSeconds() + seconds)
+  endTime(seconds) {
+    let time = new Date();
+    time.setSeconds(time.getSeconds() + seconds);
 
     return Date.parse(time);
   },
 
-  getElapsedTime: function(startTime) {
-    var time = Date.parse(new Date()) - startTime,
-        seconds = Math.floor((time / 1000) % 60),
-        minutes = Math.floor((time / 1000 / 60) % 60);
+  getElapsedTime(startTime) {
+    let time = Date.parse(new Date()) - startTime,
+      seconds = Math.floor((time / 1000) % 60),
+      minutes = Math.floor((time / 1000 / 60) % 60);
 
     return {
-      'minutes': minutes,
-      'seconds': seconds
+      minutes: minutes,
+      seconds: seconds
     };
   },
 
   dinsicStartups: computed('model', function() {
-    return this.get('model').filterBy('incubator', 'dinsic');
+    return this.model.filterBy('incubator', 'dinsic');
   }),
   activeDinsicStartups: computed('model', function() {
-    return this.get('dinsicStartups').rejectBy('status', 'death');
+    return this.dinsicStartups.rejectBy('status', 'death');
   }),
   incubateurStartups: computed('activeDinsicStartups', function() {
-    return this.get('activeDinsicStartups').rejectBy('status', 'consolidation');
+    return this.activeDinsicStartups.rejectBy('status', 'consolidation');
   }),
   friendsStartups: computed('activeDinsicStartups', function() {
-    return this.get('activeDinsicStartups')
+    return this.activeDinsicStartups
       .filterBy('status', 'consolidation')
-      .filter(function(startup) {
-        return WHITELIST.indexOf(startup.get('id')) >= 0;
-      });
+      .filter(({ id }) => WHITELIST.indexOf(id) >= 0);
   }),
   combinedStartups: union('incubateurStartups', 'friendsStartups'),
   startups: computed('combinedStartups', function() {
-    return this.shuffle(this.get('combinedStartups'));
+    return this.shuffle(this.combinedStartups);
   }),
   currentStartup: computed('startups', 'startupIndex', function() {
-    return this.get('startups')[this.get('startupIndex')];
+    return this.startups[this.startupIndex];
   }),
   groupedOtherIncubatorsStartups: computed('model', function() {
-    var otherIncubatorsStartups = this.get('model').rejectBy('incubator', 'dinsic'),
-        otherIncubators = otherIncubatorsStartups.mapBy('incubator').uniq(),
-        groupedIncubatorsStartups = [];
+    let otherIncubatorsStartups = this.model.rejectBy('incubator', 'dinsic'),
+      otherIncubators = otherIncubatorsStartups.mapBy('incubator').uniq(),
+      groupedIncubatorsStartups = [];
 
-    otherIncubators.forEach(function(item) {
+    otherIncubators.forEach(item => {
       groupedIncubatorsStartups.push({
         incubator: item,
         startups: otherIncubatorsStartups.filterBy('incubator', item)
@@ -233,63 +235,76 @@ export default Component.extend(EKMixin, {
 
     return groupedIncubatorsStartups;
   }),
-  currentIncubator: computed('groupedOtherIncubatorsStartups', 'incubatorIndex', function() {
-    return this.get('groupedOtherIncubatorsStartups')[this.get('incubatorIndex')];
-  }),
+  currentIncubator: computed(
+    'groupedOtherIncubatorsStartups',
+    'incubatorIndex',
+    function() {
+      return this.groupedOtherIncubatorsStartups[this.incubatorIndex];
+    }
+  ),
   title: computed('state', 'currentStartup', 'currentIncubator', function() {
-    switch(this.get('state')) {
+    switch (this.state) {
       case 'startups':
-        return this.get('currentStartup.name');
+        return this.currentStartup.name;
       case 'incubators':
-        return this.get('currentIncubator.incubator');
+        return this.currentIncubator.incubator;
       case 'meta':
-        return "Sujets transverses";
+        return 'Sujets transverses';
     }
   }),
   subtitle: computed('state', 'currentStartup', 'currentIncubator', function() {
-    switch(this.get('state')) {
+    switch (this.state) {
       case 'startups':
-        return this.get('currentStartup.pitch');
+        return this.currentStartup.pitch;
       case 'incubators':
-        return this.get('currentIncubator.startups').mapBy('name').join(', ');
+        return this.currentIncubator.startups.mapBy('name').join(', ');
       case 'meta':
         return '';
     }
   }),
   formattedElapsedSeconds: computed('elapsedSeconds', function() {
-    return ("00" + String(this.get('elapsedSeconds'))).slice(-2);
+    return ('00' + String(this.elapsedSeconds)).slice(-2);
   }),
   formattedElapsedMinutes: computed('elapsedMinutes', function() {
-    return ("00" + String(this.get('elapsedMinutes'))).slice(-2);
+    return ('00' + String(this.elapsedMinutes)).slice(-2);
   }),
-  isEndingSoon: computed('elapsedMinutes', 'elapsedSeconds', function () {
-    var totalElapsedSeconds = this.get('elapsedMinutes') * 60 + this.get('elapsedSeconds');
+  isEndingSoon: computed('elapsedMinutes', 'elapsedSeconds', function() {
+    let totalElapsedSeconds = this.elapsedMinutes * 60 + this.elapsedSeconds;
 
-    switch(this.get('state')) {
+    switch (this.state) {
       case 'startups':
-        return totalElapsedSeconds > this.get('STARTUP_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.STARTUP_SLIDE_ENDS_SOON_AT;
       case 'incubators':
-        return totalElapsedSeconds > this.get('INCUBATOR_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.INCUBATOR_SLIDE_ENDS_SOON_AT;
       case 'meta':
-        return totalElapsedSeconds > this.get('META_SLIDE_ENDS_SOON_AT');
+        return totalElapsedSeconds > this.META_SLIDE_ENDS_SOON_AT;
     }
   }),
-  nextSlideName: computed('state', 'startupIndex', 'incubatorIndex', function() {
-    switch(this.get('state')) {
-      case 'startups':
-        if (this.get('startupIndex') > this.get('startups.length') - 2) {
-          return this.get('groupedOtherIncubatorsStartups.firstObject.incubator');
-        } else {
-          return this.get('startups')[this.get('startupIndex') + 1].get('name');
-        }
-      case 'incubators':
-          if (this.get('incubatorIndex') > this.get('groupedOtherIncubatorsStartups.length') - 2) {
-          return 'Sujets transverses';
-        } else {
-          return this.get('groupedOtherIncubatorsStartups')[this.get('incubatorIndex') + 1].incubator;
-        }
-      case 'meta':
-        return 'fin';
+  nextSlideName: computed(
+    'state',
+    'startupIndex',
+    'incubatorIndex',
+    function() {
+      switch (this.state) {
+        case 'startups':
+          if (this.startupIndex > this.startups.length - 2) {
+            return this.groupedOtherIncubatorsStartups[0].incubator;
+          } else {
+            return this.startups[this.startupIndex + 1].name;
+          }
+        case 'incubators':
+          if (
+            this.incubatorIndex >
+            this.groupedOtherIncubatorsStartups.length - 2
+          ) {
+            return 'Sujets transverses';
+          } else {
+            return this.groupedOtherIncubatorsStartups[this.incubatorIndex + 1]
+              .incubator;
+          }
+        case 'meta':
+          return 'fin';
+      }
     }
-  })
+  )
 });
