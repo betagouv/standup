@@ -7,10 +7,7 @@ import { EKMixin, keyUp } from 'ember-keyboard';
 
 const WHITELIST = [
   'api-entreprise',
-  'api-geo',
-  'ban',
   'data.gouv.fr',
-  'geo.data.gouv.fr',
   'openfisca',
   'alpha'
 ];
