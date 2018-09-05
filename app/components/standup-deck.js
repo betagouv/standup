@@ -5,12 +5,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { EKMixin, keyUp } from 'ember-keyboard';
 
-const WHITELIST = [
-  'api-entreprise',
-  'data.gouv.fr',
-  'openfisca',
-  'alpha'
-];
+const WHITELIST = ['api-entreprise', 'data.gouv.fr', 'openfisca', 'alpha'];
 
 export default Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
