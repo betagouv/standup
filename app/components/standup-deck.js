@@ -231,7 +231,10 @@ export default Component.extend(EKMixin, {
       case 'startups':
         return this.currentStartup.pitch;
       case 'incubators':
-        return this.currentIncubator.startups.mapBy('name').join(', ');
+        return this.currentIncubator.startups
+          .rejectBy('status', 'death')
+          .mapBy('name')
+          .join(', ');
       case 'meta':
         return '';
     }
