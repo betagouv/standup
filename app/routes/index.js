@@ -6,7 +6,7 @@ const EXTRA_STARTUPS = [
     type: 'startup',
     attributes: {
       name: 'OpenFisca',
-      pitch: 'Rendre le droit calculable',
+      pitch: 'Transformer la loi en code, puis le code en loi',
       status: 'success'
     },
     relationships: {
