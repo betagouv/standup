@@ -39,6 +39,7 @@
     "ember-keyboard": "^3.0.2",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-progress-bar": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~3.3.0",
     "ember-truth-helpers": "^2.0.0",
