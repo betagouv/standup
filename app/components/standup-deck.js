@@ -21,6 +21,7 @@ export default Component.extend(EKMixin, {
   hifi: service(),
   state: 'home',
   startupIndex: 0,
+  progress: 0,
   incubatorIndex: 0,
   timer: null,
   elapsedSeconds: null,
@@ -39,6 +40,10 @@ export default Component.extend(EKMixin, {
           if (this.startupIndex < this.startups.length - 1) {
             this.setTimerForState('startups');
             this.set('startupIndex', this.startupIndex + 1);
+            this.set(
+              'progress',
+              this.startupIndex / (this.startups.length - 1)
+            );
           } else {
             this.set('startupIndex', 0);
             this.setTimerForState('incubators');
