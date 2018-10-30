@@ -40,10 +40,6 @@ export default Component.extend(EKMixin, {
           if (this.startupIndex < this.startups.length - 1) {
             this.setTimerForState('startups');
             this.set('startupIndex', this.startupIndex + 1);
-            this.set(
-              'progress',
-              this.startupIndex / (this.startups.length - 1)
-            );
           } else {
             this.set('startupIndex', 0);
             this.setTimerForState('incubators');
@@ -182,6 +178,29 @@ export default Component.extend(EKMixin, {
     };
   },
 
+  totalSlides: computed('startups', 'otherIncubators', function() {
+    return this.startups.length + this.otherIncubators.length + 1;
+  }),
+  progress: computed('state', 'startupIndex', 'incubatorIndex', function() {
+    var currentSlideNumber;
+
+    switch (this.state) {
+      case 'home':
+        currentSlideNumber = 0;
+        break;
+      case 'startups':
+        currentSlideNumber = this.startupIndex + 1;
+        break;
+      case 'incubators':
+        currentSlideNumber = this.startups.length + this.incubatorIndex + 1;
+        break;
+      case 'meta':
+        currentSlideNumber = this.startups.length + this.otherIncubators.length + 1;
+        break;
+    }
+
+    return currentSlideNumber / this.totalSlides;
+  }),
   dinsicIncubator: computed('model', function() {
     return this.store.peekRecord('incubator', 'dinsic');
   }),
