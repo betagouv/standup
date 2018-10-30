@@ -86,8 +86,8 @@ export default Component.extend(EKMixin, {
           }
           break;
         case 'meta':
-          this.setTimerForState('startups');
-          this.set('state', 'startups');
+          this.setTimerForState('incubators');
+          this.set('state', 'incubators');
           this.set('incubatorIndex', this.otherIncubators.length - 1);
           break;
       }
