@@ -21,7 +21,6 @@ export default Component.extend(EKMixin, {
   hifi: service(),
   state: 'home',
   startupIndex: 0,
-  progress: 0,
   incubatorIndex: 0,
   timer: null,
   elapsedSeconds: null,
@@ -195,7 +194,8 @@ export default Component.extend(EKMixin, {
         currentSlideNumber = this.startups.length + this.incubatorIndex + 1;
         break;
       case 'meta':
-        currentSlideNumber = this.startups.length + this.otherIncubators.length + 1;
+        currentSlideNumber =
+          this.startups.length + this.otherIncubators.length + 1;
         break;
     }
 
