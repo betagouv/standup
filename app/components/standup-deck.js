@@ -1,11 +1,8 @@
-import { union } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { EKMixin, keyUp } from 'ember-keyboard';
-
-const WHITELIST = ['api-entreprise', 'data.gouv.fr', 'openfisca', 'alpha'];
 
 export default Component.extend(EKMixin, {
   // Slide (60) + buffer (5)
@@ -41,8 +38,9 @@ export default Component.extend(EKMixin, {
             this.set('startupIndex', this.startupIndex + 1);
           } else {
             this.set('startupIndex', 0);
-            this.setTimerForState('incubators');
-            this.set('state', 'incubators');
+            // Go straight to meta
+            this.setTimerForState('meta');
+            this.set('state', 'meta');
           }
           break;
         case 'incubators':
@@ -201,26 +199,14 @@ export default Component.extend(EKMixin, {
 
     return currentSlideNumber / this.totalSlides;
   }),
-  dinsicIncubator: computed('model', function() {
-    return this.store.peekRecord('incubator', 'dinsic');
+  eigIncubator: computed('model', function() {
+    return this.store.peekRecord('incubator', 'eig');
   }),
-  dinsicStartups: computed('model', function() {
-    return this.model.filterBy('incubator', this.dinsicIncubator);
+  eigStartups: computed('model', function() {
+    return this.model.filterBy('incubator', this.eigIncubator);
   }),
-  activeDinsicStartups: computed('dinsicStartups', function() {
-    return this.dinsicStartups.rejectBy('status', 'death');
-  }),
-  incubateurStartups: computed('activeDinsicStartups', function() {
-    return this.activeDinsicStartups.rejectBy('status', 'consolidation');
-  }),
-  friendsStartups: computed('activeDinsicStartups', function() {
-    return this.activeDinsicStartups
-      .filterBy('status', 'consolidation')
-      .filter(({ id }) => WHITELIST.indexOf(id) >= 0);
-  }),
-  combinedStartups: union('incubateurStartups', 'friendsStartups'),
   startups: computed('combinedStartups', function() {
-    return this.shuffle(this.combinedStartups);
+    return this.shuffle(this.eigStartups);
   }),
   currentStartup: computed('startups', 'startupIndex', function() {
     return this.startups[this.startupIndex];
