@@ -2,6 +2,8 @@
 
 Standup is a simple web app that allows [beta.gouv.fr](https://beta.gouv.fr) to run its [weekly standup meetings](https://github.com/betagouv/beta.gouv.fr/wiki/Standup). It is deployed on Surge and available at http://stand-up.surge.sh/.
 
+Note : if you want to use this software with your own, hard-coded, data-source (and not an API), you can check out the [EIG fork](https://github.com/entrepreneur-interet-general/standup), and specifically [the commit where they introduce this behaviour](https://github.com/entrepreneur-interet-general/standup/commit/87224acc15d62f771b9a10eac0dbcdc395ec892b). [SocialGouv's rewrite](https://github.com/SocialGouv/standup) (in React) also uses a local JSON and not a API.
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
