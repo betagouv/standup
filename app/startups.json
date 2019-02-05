@@ -124,7 +124,7 @@
       "type":"startup",
       "attributes":{
         "name":"ExploCode",
-        "pitch":"Rendre le droit du travail lisibile et accessible",
+        "pitch":"Rendre le droit du travail lisible et accessible",
         "status":"success"
       },
       "relationships":{
@@ -141,7 +141,7 @@
       "type":"startup",
       "attributes":{
         "name":"IA Flash",
-        "pitch":"Fiabiliser la constatations des contraventions",
+        "pitch":"Fiabiliser la constatation des contraventions",
         "status":"success"
       },
       "relationships":{
@@ -158,7 +158,7 @@
       "type":"startup",
       "attributes":{
         "name":"Karfu'R",
-        "pitch":"Aider les rédugiés dans leurs démarches",
+        "pitch":"Aider les réfugiés dans leurs démarches",
         "status":"success"
       },
       "relationships":{
