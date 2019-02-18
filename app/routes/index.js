@@ -42,7 +42,7 @@ const EXTRA_STARTUPS = [
     attributes: {
       name: 'demarches-simplifiees.fr',
       pitch:
-        "Dématérialiser n’importe quelle démarche administrative en quelques minutes",
+        "Dématérialiser n'importe quelle démarche administrative en quelques minutes",
       status: 'consolidation'
     },
     relationships: {
