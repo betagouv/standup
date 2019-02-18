@@ -41,7 +41,8 @@ const EXTRA_STARTUPS = [
     type: 'startup',
     attributes: {
       name: 'demarches-simplifiees.fr',
-      pitch: 'Dématérialiser n’importe quelle démarche administrative en quelques minutes',
+      pitch:
+        "Dématérialiser n’importe quelle démarche administrative en quelques minutes",
       status: 'consolidation'
     },
     relationships: {
