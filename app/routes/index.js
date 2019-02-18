@@ -35,7 +35,24 @@ const EXTRA_STARTUPS = [
         }
       }
     }
-  }
+  },
+  {
+    id: 'demarches-simplifiees.fr',
+    type: 'startup',
+    attributes: {
+      name: 'demarches-simplifiees.fr',
+      pitch: 'Dématérialiser n’importe quelle démarche administrative en quelques minutes',
+      status: 'consolidation'
+    },
+    relationships: {
+      incubator: {
+        data: {
+          type: 'incubator',
+          id: 'dinsic'
+        }
+      }
+    }
+  },
 ];
 
 export default Route.extend({
