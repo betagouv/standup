@@ -52,7 +52,7 @@ const EXTRA_STARTUPS = [
         }
       }
     }
-  },
+  }
 ];
 
 export default Route.extend({
