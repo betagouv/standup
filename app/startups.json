@@ -188,7 +188,7 @@
       }
     },
     {
-      "id":"Open",
+      "id":"Open Chronic",
       "type":"startup",
       "attributes":{
         "name":"Open Chronic",
@@ -205,7 +205,7 @@
       }
     },
     {
-      "id":"Open",
+      "id":"Open Justice",
       "type":"startup",
       "attributes":{
         "name":"Open Justice",
