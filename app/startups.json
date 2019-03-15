@@ -103,11 +103,28 @@
       }
     },
     {
-      "id":"EIG",
+      "id":"EIG Link",
       "type":"startup",
       "attributes":{
         "name":"EIG Link",
         "pitch":"Accompagner les EIG",
+        "status":"success"
+      },
+      "relationships":{
+        "incubator":{
+          "data":{
+            "type":"incubator",
+            "id":"eig"
+          }
+        }
+      }
+    },
+    {
+      "id":"EIG Node",
+      "type":"startup",
+      "attributes":{
+        "name":"EIG Node",
+        "pitch":"Organiser et faire évoluer le programme EIG",
         "status":"success"
       },
       "relationships":{
