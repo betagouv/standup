@@ -76,8 +76,8 @@ h3 {
   right: 10vh;
   width: calc(100% - (50vh + (2 * 10vh) + 10vh));
   height: 17vh;
-  font-size: 8vh;
-  line-height: 17vh;
+  font-size: 5vh;
+  line-height: 15vh;
   text-align: left;
   padding-left: 5vh;
   padding-right: 5vh;
