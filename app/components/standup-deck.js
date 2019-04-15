@@ -10,7 +10,8 @@ const WHITELIST = [
   'data.gouv.fr',
   'openfisca',
   'alpha',
-  'demarches-simplifiees.fr'
+  'demarches-simplifiees.fr',
+  'preincubation'
 ];
 
 export default Component.extend(EKMixin, {

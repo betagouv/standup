@@ -35,6 +35,24 @@ const EXTRA_STARTUPS = [
         }
       }
     }
+  },
+  {
+    id: 'preincubation',
+    type: 'startup',
+    attributes: {
+      name: 'Programme de préincubation',
+      pitch:
+        'Saison 1 : ID-Quart, Otto, La Gazette, Poubelles Battle, RSA, CDE, WTF, UTS-Seyne',
+      status: 'investigation'
+    },
+    relationships: {
+      incubator: {
+        data: {
+          type: 'incubator',
+          id: 'dinsic'
+        }
+      }
+    }
   }
 ];
 
