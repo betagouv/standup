@@ -40,7 +40,7 @@ const EXTRA_STARTUPS = [
     id: 'preincubation',
     type: 'incubator',
     attributes: {
-      name: 'Programme investigation territoires',
+      name: 'Territoires',
       pitch:
         '9 semaines pour investiguer un problème de politique publique dans les collectivités territoriales. (promos en cours : Hauts de france, Côtes dArmor)',
       status: 'investigation'
