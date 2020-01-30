@@ -41,4 +41,4 @@ You will need the following things properly installed on your computer.
 
 ## Deploying
 
-* `ember surge` or `yarn surge`
+* Continuously deployed on Netlify
