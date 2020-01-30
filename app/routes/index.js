@@ -38,11 +38,11 @@ const EXTRA_STARTUPS = [
   },
   {
     id: 'preincubation',
-    type: 'incubator',
+    type: 'startup',
     attributes: {
-      name: 'Territoires',
+      name: 'Programme de préincubation',
       pitch:
-        '9 semaines pour investiguer un problème de politique publique dans les collectivités territoriales. (promos en cours : Hauts de france, Côtes dArmor)',
+        'Saison 1 : ID-Quart, Otto, La Gazette, Poubelles Battle, RSA, CDE, WTF, UTS-Seyne',
       status: 'investigation'
     },
     relationships: {
