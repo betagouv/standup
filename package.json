@@ -50,6 +50,9 @@
     "prettier": "^1.13.7",
     "qunit-dom": "^0.6.2"
   },
+  "resolutions": {
+    "broccoli-clean-css": "^2.0.0"
+  },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   }
