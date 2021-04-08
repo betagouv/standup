@@ -209,7 +209,7 @@ export default Component.extend(EKMixin, {
     return currentSlideNumber / this.totalSlides;
   }),
   dinsicIncubator: computed('model', function() {
-    return this.store.peekRecord('incubator', 'dinsic');
+    return this.store.peekRecord('incubator', 'dinum');
   }),
   dinsicStartups: computed('model', function() {
     return this.model.filterBy('incubator', this.dinsicIncubator);
