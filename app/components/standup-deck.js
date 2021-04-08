@@ -215,14 +215,13 @@ export default Component.extend(EKMixin, {
     return this.model.filterBy('incubator', this.dinsicIncubator);
   }),
   activeDinsicStartups: computed('dinsicStartups', function() {
-    return this.dinsicStartups.rejectBy('status', 'death');
+    return this.dinsicStartups;
   }),
   incubateurStartups: computed('activeDinsicStartups', function() {
-    return this.activeDinsicStartups.rejectBy('status', 'consolidation');
+    return this.activeDinsicStartups;
   }),
   friendsStartups: computed('activeDinsicStartups', function() {
     return this.activeDinsicStartups
-      .filterBy('status', 'consolidation')
       .filter(({ id }) => WHITELIST.indexOf(id) >= 0);
   }),
   combinedStartups: union('incubateurStartups', 'friendsStartups'),
@@ -263,7 +262,6 @@ export default Component.extend(EKMixin, {
         return this.currentStartup.pitch;
       case 'incubators':
         return this.currentIncubator.startups
-          .rejectBy('status', 'death')
           .mapBy('name')
           .join(', ');
       case 'meta':
